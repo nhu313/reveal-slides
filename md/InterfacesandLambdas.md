@@ -17,9 +17,9 @@ Polymorphism is the ability to present the same interface for different objects
 - Interface
   - NO shared functionality/fields
 - Abstract
-  - SHARED SOME functionalities & fields
+  - SHARED SOME functionalities & fields (except private fields & methods)
 - Class
-  - SHARED "ALL" functionalities & fields
+  - SHARED "ALL" functionalities & fields (except private fields & methods)
 
 -
 # Polymorphism
@@ -96,7 +96,7 @@ An instance of type T can be replaced by an instance of type S if S is a subtype
 
 -
 ## Liskov Substitution Principle
-An instance of the parent class can be replaced by any instance of the subclass
+An instance of type T can be replaced by an instance of type S if S is a subtype of T.
 
 ```Java
 public void sort(Comparable[] array) {
@@ -162,28 +162,12 @@ public class User implements Comparable<User>{
 ```
 
 -
-# Custom Comparable
-* Implementing Comparable tells the sort method that these objects respond to the comparetTo(T t) request, so the sorting methods will know how to evaluate them
-
-```java
-public static void main(String[] args){
-  User[] users = new User[2];
-  users[0] = new User(5, "Apple");
-  users[1] = new User(1, "Bob");
-  Arrays.sort(users);
-}
-
-```
-
--
 -
 ## 6.1.2 Properties of Interface
 
 * Interfaces are not classes, you can never instantiate an interface
   * `Comparable obj = new Comparable()` (ERROR)
-* You can declare a reference variable of type **interface**
-  * `Comparable obj = new String()`
-* As long as the class **implements** the interface, you can assign it to that reference variable.
+* You can declare a reference variable of type **interface**, as long as the class **implements** the interface
 
 ```java
 Comparable intObj = 7;
@@ -197,15 +181,6 @@ Comparable strObj = "Hello!";
 
 A class can only `extends` a single class, but it can `implements` many interfaces
 
--
-
-## A Class extends Once, implements Many.
-
-A class is only one type, but it has many "abilities"
-
--
-A class can extend only once
-
 ```java
 public abstract User {
   String getName();
@@ -215,7 +190,9 @@ public abstract Admin {
   boolean hasAccess(String request);
 }
 ```
+
 This code will not compile:
+
 
 ```java
 public class Manager extends User, Admin {
@@ -242,12 +219,6 @@ public class Manager implements User, Admin{
 }
 
 ```
--
-## Interface vs Abstract
--
--
-
-<img src = 'https://c-7npsfqifvt34x24jnhjyx2esbolfsx2edpn.g00.ranker.com/g00/3_c-7x78x78x78.sbolfs.dpn_/c-7NPSFQIFVT34x24iuuqtx3ax2fx2fjnhjy.sbolfs.dpnx2fvtfs_opef_jnhx2f61117x2f2111210247x2fpsjhjobmx2fnjoj-qjht-qipup-v2x3fx78x3d761x26rx3d61x26gnx3dkqhx26gjux3ddspqx26dspqx3dgbdftx26j21d.nbslx3djnbhf_$/$/$/$/$/$'>
 
 -
 -
@@ -311,7 +282,7 @@ public interface Admin {
 
 public interface User {
     default String getName() {
-        return "";
+        return "Test User";
     }
 }
 ```
@@ -347,6 +318,23 @@ public class Staff implements User, Admin{
     }
 }
 ```
+
+-
+## Interface vs Abstract
+-
+
+# Polymorphism
+- Interface
+  - NO shared functionality/fields
+- Abstract
+  - SHARED SOME functionalities & fields (except private fields & methods)
+- Class
+  - SHARED "ALL" functionalities & fields (except private fields & methods)
+
+-
+-
+
+<img src = 'https://c-7npsfqifvt34x24jnhjyx2esbolfsx2edpn.g00.ranker.com/g00/3_c-7x78x78x78.sbolfs.dpn_/c-7NPSFQIFVT34x24iuuqtx3ax2fx2fjnhjy.sbolfs.dpnx2fvtfs_opef_jnhx2f61117x2f2111210247x2fpsjhjobmx2fnjoj-qjht-qipup-v2x3fx78x3d761x26rx3d61x26gnx3dkqhx26gjux3ddspqx26dspqx3dgbdftx26j21d.nbslx3djnbhf_$/$/$/$/$/$'>
 
 -
 -
