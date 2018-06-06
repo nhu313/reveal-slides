@@ -321,15 +321,6 @@ public class Staff implements User, Admin{
 
 -
 ## Interface vs Abstract
--
-
-# Polymorphism
-- Interface
-  - NO shared functionality/fields
-- Abstract
-  - SHARED SOME functionalities & fields (except private fields & methods)
-- Class
-  - SHARED "ALL" functionalities & fields (except private fields & methods)
 
 -
 -
@@ -402,9 +393,6 @@ A style of programming where immutable data are transformed through (small) func
 
 ## Interface `Comparator<T>`
 
-* Type Parameters:`T` - the type of objects that may be compared by this comparator
-* Functional Interface: has only one abstract method. Therefore it created with a lambda expression or method reference
-
 ```Java
 @FunctionalInterface
 public interface Comparator<T> {
@@ -412,6 +400,8 @@ public interface Comparator<T> {
     // other static and default method
 }
 ```
+* Type Parameters:`T` - the type of objects that may be compared by this comparator (e.g. String, Double)
+* Functional Interface: an interface with only one abstract method
 
 -
 
