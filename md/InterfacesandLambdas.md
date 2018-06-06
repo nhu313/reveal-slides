@@ -341,9 +341,8 @@ public class Staff implements User, Admin{
 
 ## Interfaces and Callbacks
 
-A callback method in Java is a method that gets called when an event occurs. Usually, you can implement that by passing an implementation of a certain interface to the system that is responsible for triggering the event E.
+A callback method in Java is a method that gets called when an event occurs
 
--
 ```java
 public interface java.awt.event.ActionListener {
   void actionPerformed(ActionEvent e);
@@ -351,40 +350,53 @@ public interface java.awt.event.ActionListener {
 ```
 
 ```java
-public class ScanForNinjas implements ActionListener {
+public class CountDownListener implements ActionListener {
+    private final JButton button;
+    private int counter;
 
-    @Override
+    public CountDownListener(JButton button, int start) {
+        this.button = button;
+        this.counter = start;
+    }
+
     public void actionPerformed(ActionEvent e) {
-        System.out.println("All clear no ninjas at " + e.getWhen() + " time");
+        this.button.setText(Integer.toString(counter--));
     }
 }
 ```
 
 -
 
-Scan for Ninjas every second.
 ```
-public class ScanForEnemies {
-
+public class Main {
     public static void main(String [] args){
-        ActionListener scanForNinjas = new ScanForNinjas();
-
-        // Creates a Timer and initializes both the initial delay and between-event delay to delay milliseconds.
-        // scanForNinjas gets a call to actionPerformed method every 1000 msecs.
-        Timer t = new Timer(1000, scanForNinjas);
-        t.start();
-        JOptionPane.showMessageDialog(null, "Quit program?");
-
-       System.exit(0);
+      Frame frame = new Frame("Counter");
+      frame.setSize(400, 400);
+      frame.addWindowListener(new WindowAdapter() {
+          @Override public void windowClosing(WindowEvent e) {
+              System.exit(0);
+          }
+      });
+      JButton button = getButton();
+      frame.add(button);
+      Timer timer = new Timer(1000, new CountDownListener(button, 100));
+      timer.start();
+      frame.setVisible(true);
     }
 }
 ```
 -
+DEMO!
+-
+-
+## Functional programming
+A style of programming where immutable data are transformed through (small) functions
+
 -
 ##Lambda Expressions
 
-* lambda expression - is a block of code that you can pass around so it can be executed later, once or multiple times.
-* functional programming - a style of building the structure and elements of computer programs—that treats computation as the evaluation of mathematical functions and avoids changing-state and mutable data.
+- Let you express instances of single-method classes more compactly
+- Can stored in a variable and be executed later
 
 -
 
@@ -392,7 +404,17 @@ public class ScanForEnemies {
 
 * Type Parameters:`T` - the type of objects that may be compared by this comparator
 * Functional Interface: has only one abstract method. Therefore it created with a lambda expression or method reference
+
+```Java
+@FunctionalInterface
+public interface Comparator<T> {
+    int compare(T o1, T o2);
+    // other static and default method
+}
+```
+
 -
+
 ```java
 public class SpeedComparator implements Comparator<Person> {
 
@@ -407,7 +429,7 @@ Arrays.sort(people, new SpeedComparator());
 ```
 
 -
-* There is no reason to create a class just to implement a Comparator
+* There is no reason to create a class just to use it once
 * We can create a Lambda Expression instead
 
 -
@@ -443,6 +465,23 @@ public class Race {
 
 }
 ```
+
+-
+Lambda expression
+```java
+Comparator<Person> speedComparator = (racerOne, racerTwo) -> racerOne.speed - racerTwo.speed;
+```
+
+Class
+```java
+public class SpeedComparator implements Comparator<Person> {
+
+   public int compare(Person one, Person two){
+     return one.speed() - two.speed();
+   }
+}
+```
+
 -
 -
 
