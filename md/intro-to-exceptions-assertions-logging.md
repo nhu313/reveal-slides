@@ -1,10 +1,9 @@
 ###Exceptions, Assertions, Logging
 <p class="fragment fade-up">1. Throwable Class</p>
-<p class="fragment fade-up">2. Basic Exception Handling</p>
-<p class="fragment fade-up">3. Better Exception Handling</p>
-<p class="fragment fade-up">4. Finally Keyword</p>
-<p class="fragment fade-up">5. Assertions</p>
-<p class="fragment fade-up">6. Logging</p>
+<p class="fragment fade-up">2. Exception Handling</p>
+<p class="fragment fade-up">3. Finally Keyword</p>
+<p class="fragment fade-up">4. Assertions</p>
+<p class="fragment fade-up">5. Logging</p>
 
 -
 -
