@@ -43,11 +43,13 @@
 ###Errors
 <p class="fragment fade-up">* The `Error` hierarchy describes internal errors and resource exhaustion situations.</p>
 <p class="fragment fade-up">* Do not advertise internal java errors; Any code can potentially throw an `Error`.</p>
-<p class="fragment fade-up">* `IOError`, `StackOverflowError`, and `OutOfMemoryError` are a few of the commonly encountered `Errors`</p>
-<p class="fragment fade-up">	* `IOError` - serious I/O error has occurred</p>
-<p class="fragment fade-up">	* `StackOverflowError` - application recurses too deeply.</p>
-<p class="fragment fade-up">	* `OutOfMemoryError` - JVM cannot allocate an object because it is out of memory</p>
 
+-
+###Errors
+#### Common Errors:
+<p class="fragment fade-up"> `IOError` - serious I/O error has occurred</p>
+<p class="fragment fade-up"> `StackOverflowError` - application recurses too deeply</p>
+<p class="fragment fade-up"> `OutOfMemoryError` - JVM cannot allocate an object because it is out of memory</p>
 
 -
 ###Unchecked Exceptions
@@ -141,129 +143,43 @@ import java.io.*;
 class FilePrinter {
     private final BufferedReader reader;
 
+    public void printFile() {
+        String line = null;
+        try {
+          do {
+              line = reader.readLine();
+              System.out.println(line);
+          } while (line != null);
+        } catch (IOException e) {
+          e.printStackTrace();
+        }
+    }
+
     public FilePrinter(String fileDirectory) throws FileNotFoundException {
         this.reader = new BufferedReader(new FileReader(fileDirectory));
     }
+}
+```
 
-    public void printFile() throws IOException {
-        String line = null;
-        do {
-            line = reader.readLine();
-            System.out.println(line);
-        } while (line != null);
-    }
+-
+### Multiple Exceptions
 
-    public void tryPrintFile() {
-        try {
-            printFile();
-        } catch (IOException ioe) {
-            ioe.printStackTrace();
-        }
+```java
+@Test(expected = FileNotFoundException.class)
+public void testThrowException()  {
+    try {
+        throw new FileNotFoundException();
+    } catch (FileNotFoundException e) {
+        e.printStackTrace();
+    } catch (NullPointerException e ) {
+        e.printStackTrace();
     }
 }
 ```
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 -
--
-###Better Exception Handling
-* Multi-Exception Handling
-* Dynamic Exception Handling
-* Uniform Exception Handling (Good)
-* Uniform Exception Handling (Bad)
-* How to throw an Exception
-* Recursion <strike>and</strike> Exception Handling
+### Multiple Exceptions
 
-
--
-###Multi-Exception Handling
-* Consider the case where multiple exceptions may be thrown:
-* For example, in our `FilePrinter` class, the
-	- constructor throws a `FileNotFoundException`
-	- `printFile()` throws an `IOException`
-* What if we wanted to create a `FilePrinter` object, then print its contents?
-
--
-###Multi-Exception Handling Examples
-```Java
-public class FilePrinterTest {
-    private static final String invalidFileName = "";
-
-    @Test(expected = FileNotFoundException.class)
-    public void testInstantiation() throws FileNotFoundException {
-        FilePrinter fpt = new FilePrinter(invalidFileName);
-    }
-
-    // Attempt to instantiate FilePrinter with invalid name
-    // Attempt to invoke method on unininstatiated FilePrinter object
-    @Test(expected = NullPointerException.class)
-    public void testNullPointer() throws NullPointerException {
-        FilePrinter fpt = null;
-        try {
-            fpt = new FilePrinter(invalidFileName);
-        } catch (FileNotFoundException e) {
-            System.out.println("Printing stack trace...");
-            e.printStackTrace();
-        }
-        fpt.tryPrintFile();
-    }
-
-    @Test(expected = NullPointerException.class)
-    public void testMultiThrowSignature() throws NullPointerException, FileNotFoundException {
-        testNullPointer();
-        testInstantiation();
-    }
-
-}
-```
-
-
--
-###Dynamic Exception Handling: Expanded
-```Java   
-public class FilePrinterTest {
-	private static final String invalidFileName = "";
-	public void testInstantiateAndPrint() {
-	    FilePrinter fpt = null;
-	    try {
-	        fpt = new FilePrinter(invalidFileName);
-	    } catch(FileNotFoundException fnfe) {
-	        fnfe.printStackTrace();
-	    }
-
-	    try {
-	        fpt.printFile();
-	    } catch (IOException e) {
-	        e.printStackTrace();
-	    }
-	}
-}
-```
-
-
--
-###Dynamic Exception Handling: Compressed
 ```Java   
 public class FilePrinterTest {
 	private static final String invalidFileName = "";
@@ -272,75 +188,14 @@ public class FilePrinterTest {
 	    try {
 	        fpt = new FilePrinter(invalidFileName);
 	        fpt.printFile();
-	    } catch(FileNotFoundException fnfe) {
-	        // handle FileNotFoundException
-	        fnfe.printStackTrace();
-	    } catch(IOEXception ioe) {
-	        // handle IOException	    
-	        ioe.printStackTrace();
-	    }
-	}
-}
-```
-
-
--
-###Uniform Handling Of Exceptions (Good)
-```Java   
-public class FilePrinterTest {
-	private static final String invalidFileName = "";
-	public void testInstantiateAndPrint() {
-	    FilePrinter fpt = null;
-	    try {
-	        fpt = new FilePrinter(invalidFileName);
-	        fpt.printFile();
-
 	    // bit-wise operator supported by java 1.7+    
 	    } catch(FileNotFoundException | IOException exception) {
-	        // handle all exceptions the same way
 	        exception.printStackTrace();
 	    }
 	}
 
 }
 ```
-* Each expected exception in this class is explicitly named.
-* The handling of each of them is uniform.
-
-
--
-###Uniform Handling Of Exceptions (Bad)
-```Java   
-public class FilePrinterTest {
-	private static final String invalidFileName = "";
-	public void testInstantiateAndPrint() {
-	    FilePrinter fpt = null;
-	    try {
-	        fpt = new FilePrinter(invalidFileName);
-	        fpt.printFile();
-	    } catch(Exception exception) {
-	        // handle all exceptions the same way
-	        exception.printStackTrace();
-	    } //Isn't a number...");
-         catch(IllegalArgumentException iae) {
-            iae.printStackTrace();
-
-        }
-    }
-
-    public void parseIntegerInput(String s) {
-        try {
-            Long.parseLong(s);
-        } catch(NumberFormatException e) {
-            e.printStackTrace();
-            throw new IllegalArgumentException();
-        }
-    }
-}
-```
-
-
-
 -
 ###Recursion <strike>and</strike> Exception Handling
 <p class="fragment fade-up">* DON'T DO IT!</p>
@@ -349,39 +204,9 @@ public class FilePrinterTest {
 <p class="fragment fade-up">* By nature, recursion pends method calls `n` levels deep, where `n` is the recursive depth of the method call.</p>
 <p class="fragment fade-up">* Combining recursion and exception handling can result in very strange `StackTraces`</p>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 -
 -
 ###Finally Keyword
-* Purpose
-* Conditions under which `finally` block is executed
-* Syntax
-* Decoupling `finally` clause from `try/catch` clauses
-
-
--
-###Purpose
 <p class="fragment fade-up">* When code throws an exception, it stops processing the remaining code in the scope, then exits the method.</p>
 <p class="fragment fade-up">* If the method has acquired some local resource, then this can become an issue; The program will cease execution, and hold the resource indefinitely.</p>
 <p class="fragment fade-up">* The finally clause executes whether or not an exception was caught.</p>
@@ -401,41 +226,60 @@ class BookExample {
 	public void example1() {
 		InputStream in = ... ; //open a file
 		try {
-			try {
 				// code that may throw exception
-			} finally {
-				in.close();
-			}
 		} catch(IOException ioe) {
 			/// handle exception some way
-		}
+		} finally {
+      in.close();
+    }
 	}
 }
 ```
 
+-
+-
+### Testing
 
+```java
+@Test(expected = FileNotFoundException.class)
+public void testThrowException() throws FileNotFoundException {
+    FilePrinter printer = new FilePrinter("bad file name");
+}
+```
 
+-
+-
+### Catching exception
+* Catch exception you can handle
+* Throw exception you can't
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+-
+- Exception handling should not be replaced by a check (null/index out of bound)
+- Do not micromanage exception (don't catch multiple low level exception when you don't have to)
+- Make good use of the exception hierarchy (find the appropriate subclass to thow)
+- Do not squelch exceptions
+- Propagating exceptions is not a sign of shame
 
 
 -
+-
+###Assertions
+
+```java
+if (x < 0) throw new IllegalArgumentException("x < 0");
+```
+
+Use assert:
+
+```java
+assert x >= 0;
+```
+
+Or with a message
+```java
+assert x >= 0 : "number can't be negative";
+```
+
 -
 ###Assertions
 <p class="fragment fade-up">* Assertions are commonly used idiom of defensive programming.</p>
@@ -457,25 +301,6 @@ class BookExample {
 <p class="fragment fade-up">* Assertion failures are intended to be fatal, unrecoverable errors</p>
 <p class="fragment fade-up">* Assertion checks are turned on only during development and testing</p>
 <p class="fragment fade-up">* As an additional check against uncanny method returns.</p>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 -
