@@ -6,43 +6,16 @@
 <p class="fragment fade-up">5. Assertions</p>
 <p class="fragment fade-up">6. Logging</p>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 -
 -
-###Throwable Class
-* Throwable Hierarchy
-* Errors
-* Checked Exceptions
-* Unchecked Exceptions
 
--
 ###Throwable Hierarchy
 <img src = 'https://lh5.googleusercontent.com/WqqNoyFEkZXfmZBBQjgIutY72_BUV6_By_BAe7Ih9u36HfelS3nTWQEYtdRUkQS32Tuhg9P9CUXo-jgvOpkO84vLm2viI4Od0BNustwONdMm7DKZnKC6kyVHyRJbsESLIPV4uBU'>
 
 -
 ###Errors
 <p class="fragment fade-up">* The `Error` hierarchy describes internal errors and resource exhaustion situations.</p>
-<p class="fragment fade-up">* Do not advertise internal java errors; Any code can potentially throw an `Error`.</p>
+<p class="fragment fade-up">* Do not advertise (throw) internal java errors. Any code can potentially throw an `Error`.</p>
 
 -
 ###Errors
@@ -52,18 +25,27 @@
 <p class="fragment fade-up"> `OutOfMemoryError` - JVM cannot allocate an object because it is out of memory</p>
 
 -
+
+###Throwable Hierarchy
+<img src = 'https://lh5.googleusercontent.com/WqqNoyFEkZXfmZBBQjgIutY72_BUV6_By_BAe7Ih9u36HfelS3nTWQEYtdRUkQS32Tuhg9P9CUXo-jgvOpkO84vLm2viI4Od0BNustwONdMm7DKZnKC6kyVHyRJbsESLIPV4uBU'>
+
+-
 ###Unchecked Exceptions
 <p class="fragment fade-up">* Any exception which derives from `Error` or `RuntimeException` class.</p>
 <p class="fragment fade-up">* An Exception subclassing `RuntimeException` is considered to be the programmer's fault.</p>
-<p class="fragment fade-up">	- `ArrayIndexOutOfBoundException` can be avoided by testing array index against array bounds</p>
-<p class="fragment fade-up">	- `NullPointerException` can be avoided by testing for null values.</p>
+
+-
+###Unchecked Exceptions
+
+1. `ArrayIndexOutOfBoundException` can be avoided by testing array index against array bounds
+2. `NullPointerException` can be avoided by testing for null values
 
 
 -
 ###Checked Exceptions
-<p class="fragment fade-up">* An Exception subclassing `IOException` is _potentially_ not the programmer's fault.</p>
-<p class="fragment fade-up">	- `FileNotFoundException` can be thrown when trying to read from a remote file that a person incidentally removes.</p>
-<p class="fragment fade-up">	- `SQLException` can be thrown as a result of a faulty network connection.</p>
+An Exception subclassing `IOException` is _potentially_ not the programmer's fault.
+1. `FileNotFoundException` can be thrown when trying to read from a remote file that a person incidentally removes.
+2. `SQLException` can be thrown as a result of a faulty network connection.
 
 
 
@@ -162,13 +144,14 @@ class FilePrinter {
 ```
 
 -
-### Multiple Exceptions
+### Catching Multiple Exceptions
 
 ```java
-@Test(expected = FileNotFoundException.class)
-public void testThrowException()  {
+public void readFile()  {
+    FilePrinter fpt = null;
     try {
-        throw new FileNotFoundException();
+      fpt = new FilePrinter("bad file name");
+      fpt.printFile();
     } catch (FileNotFoundException e) {
         e.printStackTrace();
     } catch (NullPointerException e ) {
@@ -178,22 +161,82 @@ public void testThrowException()  {
 ```
 
 -
-### Multiple Exceptions
+### Catching Multiple Exceptions
 
 ```Java   
 public class FilePrinterTest {
-	private static final String invalidFileName = "";
 	public void testInstantiateAndPrint() {
 	    FilePrinter fpt = null;
 	    try {
-	        fpt = new FilePrinter(invalidFileName);
+	        fpt = new FilePrinter("bad file name");
+	        fpt.printFile();
+	    // bit-wise operator supported by java 1.7+    
+	    } catch(FileNotFoundException | NullPointerException exception) {
+	        exception.printStackTrace();
+	    }
+	}
+}
+```
+
+-
+### Catching Multiple Exceptions
+
+```java
+public void readFile()  {
+    FilePrinter fpt = null;
+    try {
+      fpt = new FilePrinter("bad file name");
+      fpt.printFile();
+    } catch (FileNotFoundException e) {
+        e.printStackTrace();
+    } catch (IOException e ) {
+        e.printStackTrace();
+    }
+}
+```
+
+-
+### Catching Multiple Exceptions
+
+Cannot do this because FileNotFoundException is a subclass of IOException.
+Since they do the same thing, there is no need to catch FileNotFoundException.
+
+```Java   
+public class FilePrinterTest {
+	public void testInstantiateAndPrint() {
+	    FilePrinter fpt = null;
+	    try {
+	        fpt = new FilePrinter("bad file name");
 	        fpt.printFile();
 	    // bit-wise operator supported by java 1.7+    
 	    } catch(FileNotFoundException | IOException exception) {
 	        exception.printStackTrace();
 	    }
 	}
+}
+```
+-
 
+###Throwable Hierarchy
+<img src = 'https://lh5.googleusercontent.com/WqqNoyFEkZXfmZBBQjgIutY72_BUV6_By_BAe7Ih9u36HfelS3nTWQEYtdRUkQS32Tuhg9P9CUXo-jgvOpkO84vLm2viI4Od0BNustwONdMm7DKZnKC6kyVHyRJbsESLIPV4uBU'>
+
+-
+### Catching Multiple Exceptions
+
+Catch IOException will also handle FileNotFoundException
+
+```Java   
+public class FilePrinterTest {
+	public void testInstantiateAndPrint() {
+	    FilePrinter fpt = null;
+	    try {
+	        fpt = new FilePrinter("bad file name");
+	        fpt.printFile();
+	    // bit-wise operator supported by java 1.7+    
+	    } catch(IOException exception) {
+	        exception.printStackTrace();
+	    }
+	}
 }
 ```
 -
@@ -220,8 +263,11 @@ public class FilePrinterTest {
 
 
 -
-###Decoupling `finally` clause from `try/catch` clauses
-```Java
+
+###Finally Keyword
+
+
+```Java   
 class BookExample {
 	public void example1() {
 		InputStream in = ... ; //open a file
@@ -230,8 +276,8 @@ class BookExample {
 		} catch(IOException ioe) {
 			/// handle exception some way
 		} finally {
-      in.close();
-    }
+          in.close();
+        }
 	}
 }
 ```
@@ -283,9 +329,9 @@ assert x >= 0 : "number can't be negative";
 -
 ###Assertions
 <p class="fragment fade-up">* Assertions are commonly used idiom of defensive programming.</p>
-<p class="fragment fade-up">* Java has a keyword `assert`, which takes two forms:
-	1. `assert condition;`
-	2. `assert condition : expression;`</p>
+<p class="fragment fade-up">* Java has a keyword `assert`, which takes two forms:</p>
+	<p class="fragment fade-up">1. `assert condition;`</p>
+	<p class="fragment fade-up">2. `assert condition : expression;`</p>
 <p class="fragment fade-up">* `assert` evaluates a condition, then throws an `AssertionError` if it is false. The second argument _expression_ is a message String.</p>
 
 
