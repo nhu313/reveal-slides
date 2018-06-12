@@ -306,7 +306,6 @@ public void testThrowException() throws FileNotFoundException {
 - Do not squelch exceptions
 - Propagating exceptions is not a sign of shame
 
-
 -
 -
 ###Assertions
@@ -346,8 +345,6 @@ assert x >= 0 : "number can't be negative";
 ###When To Use
 <p class="fragment fade-up">* Assertion failures are intended to be fatal, unrecoverable errors</p>
 <p class="fragment fade-up">* Assertion checks are turned on only during development and testing</p>
-<p class="fragment fade-up">* As an additional check against uncanny method returns.</p>
-
 
 -
 -
