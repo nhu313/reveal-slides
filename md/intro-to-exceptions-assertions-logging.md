@@ -367,9 +367,9 @@ Log is a file that store data that may be interesting to you.
 -
 ###The 7 Logging Levels
 * By default, loggers will log all messages of `INFO` or higher to console.
-* `SEVERE` highest
-* `WARNING`
-* `INFO` default
+* `SEVERE` highest (serious problem)
+* `WARNING` (potential problem)
+* `INFO` default (FYI)
 * `CONFIG`
 * `FINE`
 * `FINER`
