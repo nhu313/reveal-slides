@@ -17,6 +17,8 @@
 <p class="fragment fade-up">* Do not advertise (throw) internal java errors. Any code can potentially throw an `Error`.</p>
 
 -
+
+
 ###Errors
 #### Common Errors:
 <p class="fragment fade-up"> `IOError` - serious I/O error has occurred</p>
@@ -348,20 +350,19 @@ assert x >= 0 : "number can't be negative";
 -
 -
 ###Logging
-<p class="fragment fade-up">* It's common to use `System.out.println` to check against troublesome code.</p>
-<p class="fragment fade-up">* Once the issue is resolved, these statements are usually removed, or commented out.</p>
-<p class="fragment fade-up">* Later, if the issue persists, the print statements are re-inserted.</p>
-<p class="fragment fade-up">* The Logging API is designed to overcome this issue.</p>
+
+<p class="fragment fade-up">What do we do when there is a problem in production?</p>
+<p class="fragment fade-up">Look at the LOGS</p>
+
+-
+### What is a log?
+
+Log is a file that store data that may be interesting to you.
 
 -
 ###Principal advantages of Logging API
-<p class="fragment fade-up">* It's easy to (un)suppress all log records, or just those below a certain level.</p>
-<p class="fragment fade-up">* Suppressed logs are inexpensive; The penalty for leaving them in your code is minimal.</p>
-<p class="fragment fade-up">* Log records can be directed to different handlers; Console display, writing to file / database, etc.</p>
-<p class="fragment fade-up">* Log records can be formatted; For example: plain text, or XML</p>
-<p class="fragment fade-up">* Logging configuration is controlled by configuration file; Applications can replace this mechanism</p>
-
-
+<p class="fragment fade-up">* Easily change log level</p>
+<p class="fragment fade-up">* Easily change log handler</p>
 
 -
 ###The 7 Logging Levels
