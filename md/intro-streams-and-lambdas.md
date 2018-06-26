@@ -350,6 +350,25 @@ public Optional<String> getRandom(String[] stringArray) {
 ```
 
 -
+## Reductions
+* The `reduce` method is a general mechanism for computing a value from a stream.
+
+```Java
+public void sum(Integer[] numbers) {
+    Optional<Integer> sum = Stream.of(numbers).reduce((x, y) -> x + y);
+}
+```
+-
+## Reductions
+* The `reduce` method is a general mechanism for computing a value from a stream.
+
+```Java
+public void sum(Integer[] numbers) {
+  Integer sum2 = Stream.of(numbers).reduce(10, (x, y) -> x + y);
+}
+```
+
+-
 -
 ## Collecting Results
 
@@ -423,10 +442,14 @@ Map<Boolean, List<String>> partitioned = words.collect(Collectors.partitioningBy
 -
 -
 ## Relevant Functional Interfaces
-* A `Function` is a single-argument, non-void-returning operation.
-* A `Predicate` is a single-argument, boolean-returning operation.
-* A `Consumer` is a single-argument, with no result.
-* A `classifier` is a predicate used to group a stream.
+* A `Function` is a single-argument, returns a value (use for `map`, `groupBy`).
+    ```
+      Function<Integer, Integer> function = Math::abs;
+    ```
+* A `Predicate` is a single-argument, returns a boolean (use for `partitioned`, `filter`).
+    ```
+      Predicate<String> empty = String::isEmpty;
+    ```
 * A `lambda` is a function which can be created without belonging to any class.
 * A `method reference` is how java handles the nuance of passing methods as arguments.
 
@@ -441,7 +464,7 @@ class Demo {
 	public Map<String, Set<Locale>> demoDownstreamCollectors1() {
 	    Stream<Locale> locales = LocaleFactory.createLocaleStream();
 	    Map<String, Set<Locale>> countryToLocaleSet = locales.collect(
-	            groupingBy(Locale::getCountry, toSet()));
+	            groupingBy(Locale::getCountry, Collectors.toSet()));
 
 	    return countryToLocaleSet;
 	}
@@ -461,21 +484,6 @@ class Demo {
                 groupingBy(Locale::getCountry, counting()));
 
         return countryToLocaleSet;
-    }
-}
-```
-
--
--
-## Reduction Operations
-* The `reduce` method is a general mechanism for computing a value from a stream.
-
-```Java
-class Demo {
-IntegerFactory integerFactory = new IntegerFactory(0, 999);
-    public void demo() {
-        List<Integer> values = integerFactory.createList(100);
-        Optional<Integer> sum = values.stream().reduce((x, y) -> x + y);
     }
 }
 ```
@@ -507,10 +515,8 @@ class PrimitiveStreams {
 
 ```Java
 class PrimitiveStreams {
-    public IntStream demoGenerate() {
-        IntegerFactory integerFactory = new IntegerFactory(0,999);
-        IntStream intStream = IntStream.generate(integerFactory::createInteger);
-        return intStream;
+    public DoubleStream demoGenerate() {
+        DoubleStream doubles = DoubleStream.generate(Math::random);
     }
 }
 ```
