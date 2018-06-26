@@ -1,25 +1,30 @@
-### Streams
+## Streams
 -
 -
-### What is a Stream?
+## What is a Stream?
 
 * a sequence of objects
 
 -
-### What is a Stream?
+## What is a Stream?
 
 * Specify what to be done, rather than how/when to do it
 * Can operate on elements in parallel
 
 -
-### Processing a stream
+## Processing a stream
 1. Create a stream
 2. Specify intermediate(/transformation) operations (e.g. filter, map)
 3. Apply terminal operation to produce a result (e.g. toSet, reduce)
 
 -
+## Stream
+You can only apply terminal operation once.
+
 -
-### Stream Creation - Array strategy 1
+## Stream Creation
+
+Array strategy #1
 
 ```Java
 /** @param stringArray source array to create stream
@@ -31,7 +36,9 @@ public Stream<String> fromArray1(String[] stringArray) {
 ```
 
 -
-### Stream Creation - Array strategy 2
+## Stream Creation
+Array strategy #2
+
 ```Java
 /** @param stringArray source array to create stream
  *  @return stream representation of this array */
@@ -42,7 +49,9 @@ public Stream<String> fromArray2(String[] stringArray) {
 ```
 
 -
-### Stream Creation - From varargs
+## Stream Creation
+From varargs
+
 ```Java
 /** @return stream representation of this array */
 public Stream<String> fromVarargs() {
@@ -54,7 +63,9 @@ public Stream<String> fromVarargs() {
 ```
 
 -
-### Stream Creation - From List
+## Stream Creation
+List
+
 ```Java
 /** @param stringList source list to create stream
 *   @return stream representation of this List */
@@ -65,21 +76,8 @@ public Stream<String> fromList(List<String> stringList) {
 ```
 
 -
-### Stream Creation
-
-* `.generate`, strategy 1
-
-```Java
-/** @return endless stream */
-public Stream<String> fromGenerator1() {
-    Stream<String> stringStream = Stream.generate(() -> "Hello World");
-    return stringStream;
-}
-```
-
--
-### Stream Creation
-* `.generate`, strategy 2
+## Stream Creation
+`.generate` - creates an infinite stream by calling a function
 
 ```Java
 /** @return endless stream */
@@ -90,8 +88,21 @@ public Stream<Double> fromGenerator2() {
 ```
 
 -
-### Stream Creation
-* `.empty`
+## Stream Creation
+
+`.generate` - creates an infinite stream with a value
+
+```Java
+/** @return endless stream */
+public Stream<String> fromGenerator1() {
+    Stream<String> stringStream = Stream.generate(() -> "Echo");
+    return stringStream;
+}
+```
+
+-
+## Stream Creation
+`.empty`
 
 ```Java
 public Stream<String> fromEmpty() {
@@ -99,8 +110,9 @@ public Stream<String> fromEmpty() {
 }
 ```
 
-### Stream Creation
-* `.iterate`
+-
+## Stream Creation
+`.iterate`
 
 ```Java
 public Stream<String> fromIterator() {
@@ -111,7 +123,7 @@ public Stream<String> fromIterator() {
 -
 -
 
-### Extracting substreams
+## Extracting substreams
 
 ```Java
 public Stream<String> getSubStream(String[] stringArray, int startIndex, int endIndex) {
@@ -124,9 +136,9 @@ public Stream<String> getSubStream(String[] stringArray, int endIndex) {
 ```
 
 -
-### Combining substreams
+## Combining substreams
 
-* `Stream.concat` concatenates two streams
+`Stream.concat` concatenates two streams
 
 ```Java
 public Stream<String> combineStreams(String[] array1, String[] array2) {
@@ -139,23 +151,86 @@ public Stream<String> combineStreams(String[] array1, String[] array2) {
 
 -
 -
-### Transformations
+## Transformations
 
 -
-### Filter, Map, and FlatMap
+## Method References `::`
+* Because Java 7 has no syntax to enable a method being passed as an argument, the `::` syntax was introduced in Java 8 to reference methods.
+
+Instance method of a class
+
+```java
+Stream<String> words = Stream.of("The", "Quick", "Brown", "Fox");
+words.forEach(System.out::print);
+```
+
+-
+## Method References `::`
+Instance method of a class
+
+```java
+class SquareMaker {
+     public double square(double num){
+        return Math.pow(num , 2);
+    }
+}
+
+class DemoSquareMaker {
+	public static void main(String[] args) {
+		SquareMaker squareMaker = new SquareMaker();
+		Function<Double, Double> squareMethod = squareMaker::square;
+		double ans = squareMethod.apply(23.0);
+	}
+}
+```
+-
+## Method References `::`
+Instance method of a class
+
+```java
+Stream.of(1, 4, 4, 7, 1).min(Integer::compare);
+```
+
+-
+## Method References `::`
+Instance method in the current class
+
+```Java
+public void testMin(){
+    Optional<Integer> min = Stream.of(1, 4, 4, 7, 1).min(this::compare);
+}
+
+public int compare(Integer x, Integer y){
+    return x - y;
+}
+```
+
+-
+## Method References `::`
+Static method
+
+```Java
+public Stream<Double> fromMathRandom() {
+    Stream<Double> randoms = Stream.generate(Math::random);
+    return randoms;
+}
+```
+
+-
+-
+# Transformations
+-
+
+## Filter, Map, and FlatMap
 * The `filter` transformation yields a new stream with elements that match the specified criteria
 * The `map` transformation takes an argument of a function, applies the function to each element, and returns the respective stream
 * The `flatMap` transformation prevents nested stream structures like `Stream<Stream<String>>`
 
 -
-### Filter
-* The `filter` transformation yields a new stream with elements that match the specified criteria
+## Transformations - Filter
+`filter` yields a new stream with <br>elements that match the specified criteria
 
 ```Java
-public Stream<String> getStringsShorterThan(String[] stringArray, int length) {
-    return Arrays.stream(stringArray)
-            .filter(word -> word.length() > length);
-}
 
 public Stream<String> getStringsLongerThan(String[] stringArray, int length) {
     return Arrays.stream(stringArray)
@@ -163,25 +238,20 @@ public Stream<String> getStringsLongerThan(String[] stringArray, int length) {
 }
 ```
 
-
 -
-### Map
-* The `map` transformation takes an argument of a function, applies the function to each element, and returns the respective stream
+## Map
+`map` takes an argument of a function, applies the function to each element, and returns the respective stream
 
 ```Java
-public Stream<String> letters(String someWord) {
-    String[] characters = someWord.split("");
-    return Stream.of(characters);
-}
+Stream<String> words = Stream.of("pear", "apple", "orange", "grage");
 
-public Stream<Stream<String>> wordsMap(String[] someWords) {
-    return Stream.of(someWords).map(w -> letters(w));
-}
+List<Integer> sizes = words.map(x -> x.length())
+                            .collect(Collectors.toList());
 ```
 
 -
-### FlatMap
-* The `flatMap` transformation prevents nested stream structures like `Stream<Stream<String>>`
+## FlatMap
+`flatMap` prevents nested stream structures like `Stream<Stream<String>>` to `Stream<String>`
 
 ```Java
 public Stream<String> letters(String someWord) {
@@ -190,16 +260,13 @@ public Stream<String> letters(String someWord) {
 }
 
 public Stream<String> wordsFlatMap(String[] stringArray) {
-    Stream<String> wordStream = Stream.of(stringArray);
-    List<String> wordList = wordStream.collect(Collectors.toList());
-    return wordList.stream().flatMap(w -> letters(w));
+    return Arrays.stream(stringArray).flatMap(x -> letters(x));
 }
 ```
 
-
 -
-### Distinct
-* The `distinct` transformation returns the stream with duplicates removed
+## Distinct
+`distinct` yields a new stream with duplicates removed
 
 ```Java
 public Stream<String> uniqueWords(String... words) {
@@ -208,42 +275,51 @@ public Stream<String> uniqueWords(String... words) {
 ```
 
 -
-### Transformations: Sorted
+## Sorted
+- `.sorted` will call the compareTo method on the object to sort
+- Object must implements Comparable
+
 ```Java
 public Stream<String> sort(String[] words) {
     return Arrays.stream(words).sorted();
 }
 ```
+or you must supply a Comparator
+
+```Java
+public Stream<String> sort(String[] words) {
+    return Arrays.stream(words).sorted((x, y) -> x.length() - y.length());
+}
+```
 
 -
 -
-### Simple Reductions
+## Simple Reductions
 * Reductions are terminal operations
 * They reduce the stream to a nonstream value that can be used in the program.
 * Examples include: `.count`, `.max`, `.min`, `.findFirst`, `.findAny`, `.anyMatch`
 * Reductions yield `Optional<T>` values
 
 -
-### `Optional<T>`
-* An `Optional<T>` value either wraps the result of a method, or indicates that there is none
+## `Optional<T>`
+* An `Optional<T>` value either wraps the result of a method, or indicates that there is no result
 * The purpose of `Optional<T>` is to prevent potential `NullPointerExceptions`
 
 
 -
-### Transformations
-* `.count`
+## Reductions
+`.count`
 
 ```Java
 /** @return number of elements in an array using a stream */
-public int getCount(String[] stringArray) {
-    return (int) Arrays.stream(stringArray).count();
+public long getCount(String[] stringArray) {
+    return Arrays.stream(stringArray).count();
 }
 ```
 
-
 -
-### Transformations
-* `.min`, `.max`
+## Reductions
+`.min`, `.max`
 
 ```Java
 /** @return longest String object in an array using a stream */
@@ -258,8 +334,8 @@ public Optional<String> getMax(String[] stringArray) {
 ```
 
 -
-### Transformations
-* `.findFirst`, `.findAny`
+## Reductions
+`.findFirst`, `.findAny`
 
 ```Java
 /** @return get first String from an array using a stream */
@@ -275,42 +351,10 @@ public Optional<String> getRandom(String[] stringArray) {
 
 -
 -
-### Collecting Results
+## Collecting Results
 
 -
-### Method References `::`
-* Because Java 7 has no syntax to enable a method being passed as an argument, the `::` syntax was introduced in Java 8 to reference methods.
-
-```java
-Consumer<String> stringConsumer = System.out::print;
-Stream<String> words = Stream.of("The", "Quick", "Brown", "Fox");
-words.forEach(stringConsumer);
-```
-
-
--
-### More Method References `::`
-
-```java
-class SquareMaker {
-     public double square(double num){
-        return Math.pow(num , 2);
-    }
-}
-
-class DemoSquareMaker {
-	public static void main(String[] args) {
-		SquareMaker squareMaker = new SquareMaker();
-		Function<Double, Double> squareMethod = squareMaker::square;
-		double ans = squareMethod.apply(23.0);
-	}
-
-}
-```
-
-
--
-### Collecting Results
+## Collecting Results
 * `.toArray()`
 * It is not possible to create a generic array at runtime.<br>If you want an array of the correct type, pass in the array constructor.
 
@@ -320,7 +364,7 @@ String[] array = words.toArray(String[]::new);
 ```
 
 -
-### Collecting Results
+## Collecting Results
 `.collect()` to a List
 
 ```java
@@ -331,7 +375,7 @@ List<String> list = words.collect(Collectors.toList());
 
 
 -
-### Collecting Results
+## Collecting Results
 `.collect()` to a Set
 
 ```java
@@ -340,7 +384,7 @@ Stream<String> words = Stream.of("The", "Quick", "Brown", "Fox");
 ```
 
 -
-### Collecting Results
+## Collecting Results
 `.collect()` to a `Map`
 
 ```java
@@ -353,9 +397,8 @@ Map<Integer, String> map = words.collect(Collectors.toMap(String::hashCode, Stri
 # Grouping and Partitioning
 
 -
-### Grouping
-`.groupingBy()`
-* Forming groups of values with the same characteristic is very common, and the `groupingBy` method supports it directly.
+## Grouping
+`.groupingBy()` groups values with the same characteristic
 
 ```Java
 public Map<String, List<Locale>> groupingByDemo() {
@@ -365,28 +408,30 @@ public Map<String, List<Locale>> groupingByDemo() {
 ```
 
 -
-### Partitioning
-`.partitioningBy()`
-
-* Partitioning is a another grouping approach, in which the resultant Map contains two different groups, one for true values and another for false values.
+## Partitioning
+`.partitioningBy()` yields a Map that contains two groups, one for true values and another for false values.
 
 ```java
 Stream<String> words = Stream.of("The", "Quick", "Brown", "Fox");
 
 Map<Boolean, List<String>> partitioned = words.collect(Collectors.partitioningBy(x -> x.length() > 4));
 ```
+-
+-
+<img src="https://blazingardor.files.wordpress.com/2013/07/tumblr_m8ks4fkel51qdt6bmo1_500.jpg">
 
 -
-### Relevant Functional Interfaces
+-
+## Relevant Functional Interfaces
 * A `Function` is a single-argument, non-void-returning operation.
 * A `Predicate` is a single-argument, boolean-returning operation.
-* A `Consumer` is a single-argument, void-returning operation.
+* A `Consumer` is a single-argument, with no result.
 * A `classifier` is a predicate used to group a stream.
 * A `lambda` is a function which can be created without belonging to any class.
 * A `method reference` is how java handles the nuance of passing methods as arguments.
 
 -
-### Downstream Collectors
+## Downstream Collectors
 * The `.groupingBy` method yields a map whose values are lists
 * If you want to process those lists in some way, supply a _downstream collector_.
 * For example, if you want sets, instead of lists, you can use `Collectors.toSet`
@@ -404,7 +449,7 @@ class Demo {
 ```
 
 -
-### Downstream Collectors
+## Downstream Collectors
 * Several collectors are provided for reducing grouped elements to numbers.
 * `counting` produces a count of collected elements.
 
@@ -422,7 +467,7 @@ class Demo {
 
 -
 -
-### Reduction Operations
+## Reduction Operations
 * The `reduce` method is a general mechanism for computing a value from a stream.
 
 ```Java
@@ -437,13 +482,13 @@ IntegerFactory integerFactory = new IntegerFactory(0, 999);
 
 -
 -
-### Primitive Type Streams
+## Primitive Type Streams
 * The stream library has specialized types `IntStream`, `LongStream`, and `DoubleStream` that store primitive values directly without using wrappers.
 * If you want to store `int`, `short`, `char`, `byte`, and `boolean`, use an `IntStream`.
 * If you want to store `float`, or `double`, use `DoubleStream`.
 
 -
-### Populate `IntStream`
+## Populate `IntStream`
 * Use `.of` to populate a stream with respective values
 
 ```Java
@@ -457,7 +502,7 @@ class PrimitiveStreams {
 
 
 -
-### Generate `IntStream`
+## Generate `IntStream`
 * Use `.generate` to create endless stream
 
 ```Java
@@ -472,7 +517,7 @@ class PrimitiveStreams {
 
 
 -
-### Create exclusive range `IntStream`
+## Create exclusive range `IntStream`
 * Use `.range` to generate a set of ints between specified `min` and `max` values
 
 ```Java
@@ -489,7 +534,7 @@ class PrimitiveStreams {
 
 
 -
-### Create inclusive range `IntStream`
+## Create inclusive range `IntStream`
 * Use `.range` to generate a set of ints between specified `min` and `max` values
 
 ```Java
@@ -505,7 +550,7 @@ class PrimitiveStreams {
 ```
 
 -
-### Primitive to Object stream
+## Primitive to Object stream
 * Use the `.boxed` method to convert form primitive streams to object streams
 
 ```Java
@@ -518,10 +563,10 @@ public class PrimitiveStreams {
 -
 -
 
-### Composing Optional Value Functions<br>With `.flatMap`
+## Composing Optional Value Functions<br>With `.flatMap`
 
 -
-### Chaining Method Calls
+## Chaining Method Calls
 * Consider the following:
 	* `S` is a class which contains the definition of method `.f()`
 	* Method `.f()` returns `Optional<T>`
@@ -531,7 +576,7 @@ public class PrimitiveStreams {
 
 -
 -
-### Parallel Streams
+## Parallel Streams
 * Streams make it easy to parallelize bulk operations.
 * The process is mostly automatic, but you need to take note of the following:
 	1. Use a parallel stream
@@ -560,7 +605,7 @@ class Demo {
 
 
 -
-### Using parallel stream
+## Using parallel stream
 * It is your responsibility to ensure that any functions passed to parallel stream operations are safe to execute in parallel.
 * The best way to do that is to stay away from mutable state.
 * In this example, you can safely parallelize the computation if you group strings by length and count them.
