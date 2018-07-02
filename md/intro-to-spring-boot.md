@@ -71,9 +71,9 @@ public class Farm {
   private FarmHouse farmhouse;
 
 }
-[Annotations](https://springframework.guru/spring-framework-annotations/)
 
 ```
+[Annotations](https://springframework.guru/spring-framework-annotations/)
 
 -
 ## Spring Bean
@@ -185,7 +185,7 @@ public class Person {
 
 ## Resources
 
-[Annotations](https://springframework.guru/spring-framework-annotations/)
-[Spring Boot - JournalDev](https://www.journaldev.com/7969/spring-boot-tutorial)
-[Spring Boot - Intro](https://spring.io/guides/gs/spring-boot/)
-[Spring Boot - Rest](https://spring.io/guides/gs/rest-service/)
+- [Annotations](https://springframework.guru/spring-framework-annotations/)
+- [Spring Boot - JournalDev](https://www.journaldev.com/7969/spring-boot-tutorial)
+- [Spring Boot - Intro](https://spring.io/guides/gs/spring-boot/)
+- [Spring Boot - Rest](https://spring.io/guides/gs/rest-service/)
