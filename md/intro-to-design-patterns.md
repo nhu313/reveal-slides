@@ -109,8 +109,8 @@ Decorator: BufferedInputStream, CheckedInputStream, CipherInputStream, DataInput
 
 -
 ## Facade pattern
-Think of building a queue, using a List
-Queue only has two methods
+Think of building a stack, using a List
+Stack only has two methods
 - push
 - pop
 
@@ -149,7 +149,100 @@ Queue only has two methods
 ## Creational patterns
 Encapsulates the constructions of the objects
 - Abstract Factory
-- Builder
 - Factory Method
-- Prototype
+- Builder
 - Singleton
+- Prototype
+
+-
+## Abstract factory
+
+**Problem**: needs to hide how concrete objects are created
+
+-
+## Abstract factory pattern
+
+<img src="https://upload.wikimedia.org/wikipedia/commons/9/9d/Abstract_factory_UML.svg" width=650px>
+
+-
+## Builder
+**Problem**: needs to create a complex object
+
+-
+## Builder
+<img src="https://upload.wikimedia.org/wikipedia/commons/f/f3/Builder_UML_class_diagram.svg" width=650px>
+
+-
+
+```java
+class Car {
+    private int wheels;
+    private String color;
+}
+
+class CarBuilder {
+    private Car car;
+
+    public CarBuilderImpl() {
+        car = new Car();
+    }
+
+    public Car build() {
+        return car;
+    }
+
+    public CarBuilder setColor(final String color) {
+        car.setColor(color);
+        return this;
+    }
+}
+```
+-
+
+```java
+public class CarBuildDirector {
+    public Car construct() {
+        CarBuilder builder = new CarBuilder();
+        return builder.setWheels(4)
+                      .setColor("Red")
+                      .build();
+    }
+
+}
+```
+
+-
+-
+## Behavioral
+- Null object
+- Chain of responsibility
+- Command
+- Iterator
+- Observer
+- Template
+- Visitor
+- Strategy
+- State
+
+-
+## Chain of responsibility
+**Problem**: needs to detach the sender of a request to its receiver
+
+-
+## Chain of responsibility
+
+<img src="https://cdn.journaldev.com/wp-content/uploads/2013/07/Chain-of-Responsibility-Pattern.png" width=650px>
+
+-
+## Chain of responsibility
+
+<img src="https://www.oodesign.com/images/stories/chain%20of%20responsability%20implementation%20-%20uml%20class%20diagram.gif" width=650px>
+
+-
+## Command
+**Problem**: needs to encapsulate how an action is performed
+
+-
+## Command
+
+<img src="https://upload.wikimedia.org/wikipedia/commons/c/c8/W3sDesign_Command_Design_Pattern_UML.jpg" width=650px>
