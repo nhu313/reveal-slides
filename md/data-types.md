@@ -69,12 +69,17 @@ Negative and positive numbers without fractions
 -
 ## What is a byte?
 
-Think of a byte as one tiny box of memory. A short needs boxes to store the number. An int needs 4 boxes.
+Think of a byte as one tiny box of memory.
+
+A short needs 2 boxes to store the number.
+
+An int needs 4 boxes.
 
 Each of the box holds 8 bits. A bit can hold a value of 0 or 1.
 
 1 MB ~ 1 million bytes
-1 GB ~ 1 trillion bytes
+
+1 GB ~ 1 billion bytes
 
 -
 ## Variables
@@ -184,7 +189,7 @@ Note `'8'` is NOT the same as the number `8` without quotes. One is a char, the 
 
 -
 
-###The boolean Type
+## The boolean Type
 
 The boolean type has two values: <span style="color: red">false</span> and <span style="color:green">true</span>.
 
@@ -194,14 +199,25 @@ boolean b = 1 > 5; // false
 boolean c = 1 == 1; // true
 boolean d = 1 >= 5; // false
 boolean e = 1 <= 5; // true
+boolean f = 8 == '8'; // false
 ```
 
 -
 -
+
+## Is Java a true object oriented language?
+
+<p class="fragment fade-in-then-semi-out">No, because primitive types are not objects.</p>
+
+-
+-
+
 ## Resources
 - Core Java Chapter 3.3
 - [Data types - Oracle](https://docs.oracle.com/javase/tutorial/java/nutsandbolts/datatypes.html)
 - [Understanding Binary](https://www.youtube.com/watch?v=Xpk67YzOn5w)
+
+-
 
 ## The end
 
