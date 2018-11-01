@@ -140,8 +140,7 @@ Sharing is caring
 -
 -
 # Encapsulation
-- Don’t tell others your secret
-- Don’t let others directly manipulate your instance variable
+- A mechanism of wrapping the data (variables) and code acting on the data (methods) together as a single unit
 
 -
 -
