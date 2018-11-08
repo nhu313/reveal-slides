@@ -1313,6 +1313,58 @@ h2 { color: green; }
 - Designer usually `normalize` (reset) all the elements so left 10px means left 10px everywhere
 
 -
+-
+## Cascading
+Styles "cascade" down until changed
+
+```
+p{
+  color:blue;
+  font-family: 'Helvetica';
+}
+.red {
+  color: red;
+}
+#special {
+  font-family: Arial;
+}
+```
+
+```
+<p>Paragraph</p>
+<p class ="red">Paragraph</p>
+<p class = "red" id ="special">Paragraph</p>
+```
+
+-
+
+## Cascading priority
+Your browser assigns different priorities to CSS depending on the type of selector.
+
+1. Important! - Most Important
+2. In line CSS
+3. ID
+4. Class
+5. Element - Least Important
+
+-
+
+## Cascading priority
+Your browser also assigns priority based on the specificity of the selection. More specific selectors have higher priority.
+
+```
+.main .sale .clearance p{ //Most specific
+  color: red;
+}
+.header .title p{
+  color: green;
+}
+.footer p{ //Least specific
+  color: blue;
+}
+```
+
+-
 
 ## Demo
 - view CSS property of an element in the browser
