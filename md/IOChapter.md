@@ -4,30 +4,176 @@
 -
 ### Input/output streams
 
-- Input streams -- A source to read bytes
-- Output streams -- A destination to write bytes
-
--
-#### I/O Streams come from multiple sources
-
-- Come from multiple sources (eg: files, network, memory )
+- Stream - a sequence of data
+- Input streams - a source to read bytes
+- Output streams - a destination to write bytes
 - Not related to the collection Streams API
 
 -
-#### I/O Streams vs Readers and writers
+### Input Stream
 
-- I/O Streams consume and produce (read and write) bytes
-- Readers and Writers consume and produce character sequences
+- Come from multiple sources (eg: files, network, user input)
+
+<img src="https://docs.oracle.com/javase/tutorial/figures/essential/io-ins.gif">
 
 -
-#### Creating Input Streams
+### User input stream
 
-- `Files.newInputStream(path)`
-- `new URL(urlstring).openStream()`
-- `new ByteArrayInputStream(byteArray)`
+```java
+InputStream input = System.in;
+Scanner scanner = new Scanner(input);
+String userInput = scanner.nextLine();
+```
 
-Note: lab idea: read html from a url and extract the comments. Expand by finding
-content such as script/noscript/meta tags
+-
+### File input stream
+
+Reading a file
+
+```java
+String filePath = "./src/main/resources/users.csv";
+FileInputStream input = new FileInputStream(filePath);
+Scanner scanner = new Scanner(input);
+
+StringBuilder builder = new StringBuilder();
+
+while(scanner.hasNextLine()) {
+    builder.append(scanner.nextLine() + "\n");
+}
+
+```
+
+-
+### File input stream
+
+Another way to read a file
+
+```java
+String filePath = "./src/main/resources/users.csv";
+
+//You can use Files.newInputStream instead of new FileInputStream
+//but you need to give it a Path object, not a string
+Path path = Paths.get(filePath);
+InputStream input = Files.newInputStream(path);
+
+//get the input stream
+Scanner scanner = new Scanner(input);
+//set the delimiter to the end of file character
+scanner.useDelimiter("\\Z");
+
+//read the whole file until it get to \\Z
+//which is the end of the file
+String content = scanner.next();
+
+```
+
+-
+## Ending character
+
+New line character
+
+- `"\r\n"`
+- `"\r"`
+- `"\n"`
+
+End of file
+- `"\Z"`
+
+[Pattern](https://docs.oracle.com/javase/7/docs/api/java/util/regex/Pattern.html)
+
+-
+## Reading a file
+
+Another way to read a file without stream
+
+```java
+byte[] bytes = Files.readAllBytes(Paths.get(filePath));
+String content = new String(bytes);
+```
+
+
+-
+### Creating Input Streams
+
+- `Files.newInputStream(new Path(filePath))` - read file
+- `new URL(urlstring).openStream()` - read network (e.g. website, api) content
+- `new ByteArrayInputStream(byteArray)` - read byte
+
+-
+
+### Mocking out user input
+
+We know `System.in` is an input stream
+
+```java
+InputStream input = System.in
+```
+
+Create the Console class and pass in InputStream.
+
+That way we can mock out the InputStream in the test.
+
+```java
+public class Console {
+    private Scanner scanner;
+    private PrintStream output;
+
+    public Console(InputStream input, PrintStream output) {
+        scanner = new Scanner(input);
+        this.output = output;
+    }
+
+    public String getUserInput(){
+        return scanner.nextLine();
+    }
+}
+```
+
+-
+
+### Mocking out user input
+
+Setting up the test
+
+```java
+// create the input stream to mock the user input
+byte[] bytes = "2\nwords".getBytes();
+InputStream input = new ByteInputStream(bytes, bytes.length);
+
+// Create the new console with the mock input stream
+Console console = new Console(input, System.out);
+
+// Pass the console to the game
+BlackJackGame game = new BlackJackGame(console);
+
+```
+
+The Console class
+
+```java
+// because the scanner has our mocked input stream
+// when it gets call, it will return the value we set (2, words)
+public String getUserInput(){
+    return scanner.nextLine();
+}
+```
+
+-
+### Console
+
+In your code
+
+```java
+Console console = new Console(System.in, System.out);
+BlackJackGame game = new BlackJackGame(console);
+```
+
+-
+-
+
+## Output Stream
+
+A destination to write data
 
 -
 #### Creating Output Streams
@@ -37,49 +183,229 @@ content such as script/noscript/meta tags
 - `new ByteArrayOutputStream()`
   - can be converted to `ByteArray` after writing
 
+-
+## Output Stream
+
+`System.out` is a PrintStream
+
+```java
+PrintStream printStream = System.out;
+printStream.print("hello");
+```
+
+PrintStream is an OutputStream
+
+```java
+OutputStream output = System.out;
+//will prints hello to the console
+output.write("hello".getBytes());
+```
+
+-
+
+## Mocking OutputStream
+
+We know System.out is a PrintStream
+
+```java
+PrintStream printStream = System.out;
+printStream.print("hello");
+```
+
+Make Console take in PrintStream to mock it out
+
+```java
+public class Console {
+    private Scanner scanner;
+    private PrintStream output;
+
+    public Console(InputStream input, PrintStream output) {
+        scanner = new Scanner(input);
+        this.output = output;
+    }
+
+    public void printMessage(String message) {
+        this.output.print(message);
+    }
+}
+
+```
+
+-
+## Mocking OutputStream in Test
+
+```java
+@Test
+public void testWelcomeMessage(){
+  //Given - Set up stream
+  ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+  PrintStream output = new PrintStream(outputStream);
+  //set up game
+  Console console = new Console(System.in, output);
+  BlackJackGame game = new BlackJackGame(console);
+
+  //when
+  game.start();
+  String actual = outputStream.toString();
+
+  //Then
+  String expected = "Welcome to BlackJack";
+  Assert.assertEquals(expected, actual);
+}
+```
+
+-
+## Console
+
+In your code
+
+```java
+Console console = new Console(System.in, System.out);
+BlackJackGame game = new BlackJackGame(console);
+```
+
+-
+## File OutputStream
+
+```java
+FileOutputStream output = null;
+try {
+    boolean append = true;
+    output = new FileOutputStream("user.csv", append);
+    output.write("why111".getBytes());
+    output.close();
+}finally {
+    if (output != null) {
+        output.close();
+    }
+}
+```
+
+-
+
+## File OutputStreamWriter
+Write to a file using `FileWriter` which has an output stream
+
+```java
+OutputStreamWriter fileWriter = null;
+try {
+    //use new FileWriter() to write to replace the file content
+    boolean append = true;
+    fileWriter = new FileWriter("testFile.csv", append);
+
+    fileWriter.write("why");
+    fileWriter.close();
+}finally {
+    if (fileWriter != null) {
+        // make sure to close the file if it's open
+        fileWriter.close();
+    }
+}
+```
+
+
+
+-
+## Read and write
+
+
+```java
+FileInputStream input = null;
+FileOutputStream out = null;
+
+try {
+    in = new FileInputStream("users.csv");
+    out = new FileOutputStream("copy_users.csv");
+    int c;
+
+    while ((c = in.read()) != -1) {
+        out.write(c);
+    }
+} finally {
+    if (in != null) {
+        in.close();
+    }
+    if (out != null) {
+        out.close();
+    }
+}
+```
+
+-
+
+## Read and write
+
+<img src="https://docs.oracle.com/javase/tutorial/figures/essential/byteStream.gif">
 
 -
 -
-#### Know your encoding
 
-Unicode (UTF-8, UTF-16) are common. Many methods have optional encoding and
- default to system encoding.
+## Paths
 
-UTF-16 files start with a Byte-Order-Mark (`BOM`) to indicate if they are
- big-endian or little-endian (two ways of structuring bytes in a file)
+- a route to a file/directory
+- can be absolute (`/Users/dee/zcw/labs`)
+- can be relative (`labs`)
+
+-
+## Get a path
+
+```java
+Path path1 = Paths.get("src/main/resources/users.csv");
+Path path2 = Paths.get("src", "main", "resources", "users.csv");
+Path path3 = Paths.get("src/main/", "resources", "users.csv");
+Path path4 = Paths.get("./src/main/", "resources", "users.csv");
+```
+
+-
+## Resolve a path
+
+```java
+
+Path rootPath = Paths.get("/users/dee/zcw");
+// filePath is /users/dee/zcwuser.csv
+Path filePath = rootPath.resolve("user.csv");
+
+```
 
 -
 -
-## Paths, Files, Directories
 
 
-
--
-### Filesystem Utility Classes
-
-- `Files`
-- `Paths`
+## URL Connections
 
 -
-### Paths
+### Get a URLConnection
 
-Path objects represent a route to a file, whether it exists or not. Use them to
- access, create, modify, or delete files and directories.
+Call `openConnection` on a `URL` object eg:
 
--
-### Define relative or absolute paths
-
-- `Path userDir = Paths.get("/", "users", "username");`
-- `Path javaFile = Paths.get("labs", "lab1", "src", "main", "java", "App.java");`
-- `Path roundabout = Paths.get("home", ".", "labs", "..", "documents", "..", ".", "Downloads");`
+```java
+URL url = new URL("http://www.google.com");
+URLConnection conn = url.openConnection();
+```
 
 -
-### Resolving or normalizing Paths
+## Read content
 
-- `userDir.resolve(javaFile)` resolves to `/users/username/labs/lab1/src/main/java/App.java`
-- `roundabout.normalize()` returns `Paths.get("home", "Downloads")`
+```java
+URLConnection conn = url.openConnection();
+InputStreamReader inputStream = null;
+BufferedReader reader = null;
+try {
+    inputStream = new InputStreamReader(conn.getInputStream());
+    BufferedReader br = new BufferedReader(inputStream);
+
+    String inputLine = null;
+    while ((inputLine = br.readLine()) != null) {
+        System.out.println(inputLine);
+    }
+} finally {
+    reader.close();
+}
+```
 
 -
+-
+
 ### Directory operations
 
 - `Files.createDirectory(path)` -- like `mkdir path`
@@ -94,24 +420,21 @@ Path objects represent a route to a file, whether it exists or not. Use them to
 - `Files.move(fromPath, toPath, options...)`
 - `Files.delete(path)`, `Files.deleteIfExists(path)`
 
--
-### File operation options
-
-||||
-|-|-|-|
-|READ |ATOMIC_MOVE    |TRUNCATE_EXISTING|
-|WRITE|COPY_ATTRIBUTES|REPLACE_EXISTING|
-||||
-
+[Files API - Options](https://docs.oracle.com/javase/7/docs/api/java/nio/file/Files.html#copy(java.nio.file.Path,%20java.nio.file.Path,%20java.nio.file.CopyOption...)
 -
 ### Viewing directory contents
 
-List contents of `path` with `Files.list(path)`.  
-List contents of `path` and its subdirectories with `Files.walk(path)`
+List out the files/directories
 
-Both methods return a `Stream<Path>` of the entries found (Uses a depth-first
- traversal order)
+```java
+Stream<Path> paths = Files.list("/users/dee/zcw");
+```
 
+List out the files/directories and subdirectories
+
+```java
+Stream<Path> paths = Files.walk("/users/dee/zcw");
+```
 -
 -
 ## Zip File Systems
@@ -123,11 +446,11 @@ ZIP files are just self-contained filesystems. Access them with the
 ### Read paths from a ZIP file
 
 ```Java
-FileSystem fs = FileSystems.newFileSystem(Paths.get(zipname), null);
+//class loader to find the provider
+ClassLoader classLoader = null;
+FileSystem fs = FileSystems.newFileSystem(Paths.get("data.zip"), classLoader);
 Stream<Path> entries = Files.walk(fs.getPath("/"));
 ```
-
-Note: second argument is an optional classloader for locating providers
 
 -
 #### Writing to ZIP archives
@@ -137,45 +460,31 @@ Path zipPath = Paths.get("archive.zip");
 URI uri = new URI("jar", zipPath.toUri().toString(), null);
 Map<String, String> env = Collections.singletonMap("create", "true");
 
+String fileName = "users.csv";
 try (FileSystem fs = FileSystems.newFileSystem(uri, env);){
-  Files.copy(fromPath, fs.getPath("/").resolve(toPath));
+    Files.copy(Paths.get(fileName), fs.getPath("/").resolve(fileName));
 }
 ```
 
--
--
-## URL Connections
+- env - a map of provider specific properties to configure the file system; may be empty
 
--
-### Get a URLConnection
-
-Call `openConnection` on a `URL` object eg:
-
-`URLConnection conn = url.openConnection();`
-
--
-### Set request properties
-
-`connection.setRequestProperty("Accept-Charset", "UTF-8, ISO-8859-1, SMOKE-SIGNAL")`
-
--
-### Sending data to a URLConnection
-
-Call `connection.setDoOutput(true)` and then write to `connection.getOutputStream()`
-
--
-### Caveats
-
-- URLConnection class automatically sets `application/x-www-form-urlencoded` content type.
-- name/value pairs in urls must be manually encoded using `URLEncoder.encode()`
+[FileSystems API](https://docs.oracle.com/javase/7/docs/api/java/nio/file/FileSystems.html)
 
 -
 -
 ## Serialization
 
-- Serialization is a mechanism of converting the state of an object into a byte stream.
-- Deserialization is the reverse process where the byte stream is used to recreate the actual Java object in memory.
-- This mechanism is used to persist the object.
+Convert Java objects state into Java byte streams
+
+-
+## Deserialization
+
+Convert Java byte stream into Java object
+
+-
+## Serialization
+
+- a mechanism to persist the object
 - Classes must implement `Serializable` to be serialized
 - Serialization is safe if all instance variables are primitives, enums, or other Serializable objects
 - Collections are Serializable if their elements are.
@@ -189,11 +498,11 @@ Note: Shared references to a serialized object must match after deserialization
 - Usually used on derived values or non-`Serializable` values
 
 -
-#### transient example
+#### Example
 
 ```Java
 public class Student implements Serializable{
-  private List<TestScore> testScores;
+  private List<Integer> testScores;
   // calculated from testScores
   private transient GradeStats gradeStats;
 
@@ -222,18 +531,12 @@ general interface for serialization
 
 ```Java
 // from java.io.ObjectOutputStream:
-public final void writeObject(Object obj)
+public final void writeObject(ObjectOutputStream outputStream)
                        throws IOException
 
 // from java.io.ObjectInputStream
-public final Object readObject()
+public final Object readObject(ObjectInputStream inputStream)
                   throws IOException,  ClassNotFoundException
 ```
 
--
-### `readResolve()` and `writeReplace()`
-
-- very rare, but allows you to serialize a proxy object (returned by `writeReplace()`) instead of the actual object
-- (for highly controlled initialization -- constructors are not normally called during deserialization).
-- Proxy object must construct and return the desired original object in the `readResolve()` method.
-- Useful for database-managed objects and was used for singletons prior to `enums`
+[Serialization's Blog](https://www.oracle.com/technetwork/articles/java/javaserial-1536170.html)
