@@ -69,24 +69,200 @@ Sets are often used to test for membership using the `contains()` method
 
 Note: `Dequeue` is often used for stacks as well
 
+-
+-
+## Map
+
+A Map is an object that associates keys to values.
+
+### Example:
+  - phonebook
+  - dictionaries
 
 -
+## Map
+
+#### Phonebook
+
+| Name(key) | Number(value) |
+|------|--------|
+|Wilhem|111-111-1111|
+|Dolio|222-222-2222|
+|Froilan| 333-333-3333|
+
+-
+
+## Map
+
+- Elements/Entries are pairs of objects, called keys and values
+- Keys are used to lookup values
+- Keys are unique
+- Values does not have to be unique
+- Key has to be associated with a value (null can be a value)
+
+-
+## Map
+
+Create a map
+
+```
+//creating a hashmap
+Map<String, String> phonebook = new HashMap<String, String>();
+
+//creating a treemap
+Map<String, String> phonebook = new TreeMap<String, String>();
+```
+
+-
+## Map
+
+Add entries `put(key, value)`
+
+```
+Map<String, String> phonebook = new HashMap<String, String>();
+//phonebook.put(key, value)
+phonebook.put("Wilhem", "111-111-1111");
+phonebook.put("Dolio", "222-222-2222");
+phonebook.put("Froilan", "333-333-3333");
+```
+
+| Name(key) | Number(value) |
+|------|--------|
+|Wilhem|111-111-1111|
+|Dolio|222-222-2222|
+|Froilan| 333-333-3333|
+
+-
+## Map
+`.get(key)`
+
+Given a key, give me the value associated with it
+
+```
+phonebook.get("Wilhem"); //"111-111-1111"
+phonebook.get("Dolio"); //"222-222-2222"
+phonebook.get("Kris"); //null
+```
+
+| Name | Number |
+|------|--------|
+|Wilhem|111-111-1111|
+|Dolio|222-222-2222|
+|Froilan| 333-333-3333|
+
+-
+## Map
+`.getOrDefault(key, defaultValue)` (Java 8+)
+
+Given a key, give me the value associated with it.
+
+If there is no value, then return the default value.
+
+```
+phonebook.getOrDefault("Wilhem", ""); //"111-111-1111"
+phonebook.getOrDefault("Kris", ""); //""
+```
+
+-
+## Map
+
+Update entries `.put(key, value)`
+
+```java
+phonebook.put("Wilhem", "111-111-1111");
+
+// updating the value for Wilhem
+phonebook.put("Wilhem", "444-444-4444");
+```
+
+| Name(key) | Number(value) |
+|------|--------|
+|Wilhem|444-444-4444|
+
+-
+## Map - Keys
+
+Get all the keys `.keySet()`
+
+```java
+Map<String, String> phonebook = new HashMap<String, String>();
+phonebook.put("Wilhem", "111-111-1111");
+phonebook.put("Dolio", "222-222-2222");
+phonebook.put("Froilan", "333-333-3333");
+
+//get all the keys
+Set<String> allKeys = phonebook.keySet();
+
+```
+-
+## Map - Values
+
+Get all the values `.values`
+
+```java
+Map<String, String> phonebook = new HashMap<String, String>();
+phonebook.put("Wilhem", "111-111-1111");
+phonebook.put("Dolio", "222-222-2222");
+phonebook.put("Froilan", "333-333-3333");
+
+//get all the values
+Collection<String> allValues = phonebook.values();
+
+```
+
+-
+## Map - Entries
+
+Get all the entries `.entrySet()`
+
+```java
+Map<String, String> phonebook = new HashMap<String, String>();
+phonebook.put("Wilhem", "111-111-1111");
+phonebook.put("Dolio", "222-222-2222");
+phonebook.put("Froilan", "333-333-3333");
+
+//get all the entries
+Set<Map.Entry<String, String>> entries = phonebook.entrySet();
+
+```
+
+-
+# Map
+
+- `size()` - the number of elements in the map
+- `get(key)` - get the value associated with the key
+- `put(key, value)` - add the key and value to the map
+- `remove(key)` - remove the entry with this key
+- `containsKey(key)` - returns true if it has the key
+- `containsValue(value)` - return true if it has the value
+- `entrySet()` - return all the elements in the map
+- `isEmpty()` - return true if size is 0
+- `keySet()` - return all the keys
+- `values` - return all the values
+
+[Java Map API](https://docs.oracle.com/javase/8/docs/api/java/util/Map.html)
+
+-
+
 ## Map types
 
-- TreeMap - Keeps keys in insertion order
-- HashMap - Hashes keys for quick access
-- LinkedHashMap - Hashes keys, but preserves order with a LinkedList
-- WeakHashMap - Objects stored in `WeakHashMap`s can still be garbage collected
+- `TreeMap` - Keeps keys in insertion order
+- `HashMap` - Hashes keys for quick access
+- `ConcurrentHashMap` - similar to HashMap but can be use concurrently
 
 -
-## Using maps
+## Map
 
-- Elements are pairs of objects, called keys and values
-- keys are used to lookup values
-- Check for a specific key with `containsKey(key)`
-- Add key-value pairs with `put(key, value)`
-- Get values with `get(key)`
-- Keys are stored in a Set, retrievable with `keySet()`
+### Resources
+- Core Java 9.3
+- [Java Trail - Map](https://docs.oracle.com/javase/tutorial/collections/interfaces/map.html)
+- [dummies - Map](https://www.dummies.com/programming/java/what-is-a-java-map/)
+- [Java Map API](https://docs.oracle.com/javase/8/docs/api/java/util/Map.html)
+- [Java HashMap API](https://docs.oracle.com/javase/8/docs/api/java/util/HashMap.html)
+- [Java TreeMap API](https://docs.oracle.com/javase/8/docs/api/java/util/TreeMap.html)
+- [Java ConcurrentHashMap API](https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/ConcurrentHashMap.html)
+- [Nhu - How to use a Map](https://medium.com/@nhu313/how-to-use-a-java-hashmap-2df489f482aa)
+- [Nhu - What is a HashMap](https://medium.com/@nhu313/what-is-a-java-hashmap-83152fb632bb)
 
 -
 -
