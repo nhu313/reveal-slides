@@ -1,5 +1,4 @@
-# Intro to HTML, CSS and JS
-
+# Intro to HTML & CSS
 -
 -
 
@@ -10,11 +9,67 @@
 
 ## What is HTML?
 
-* Stands for Hyper Text Markup Language
+HTML is the code for creating web pages.
+
+<img src="img/airbnb-clean.png">
+
+-
+
+## What is HTML?
+
+* Stands for `Hyper Text Markup Language`
 * A markup language
     * defines the **structure** and **semantics** of webpage content through a series of elements.
 * **Not** a programming language
 
+-
+## Example of HTML
+
+```
+<h1>Intro to HTML</h1>
+```
+
+```
+<p>talk about html</p>
+```
+
+```
+<h3>To do list</li>
+<ul>
+  <li>Go to </li>
+  <li>Laundry</li>
+  <li>Mop</li>
+  <li>Pay bills</li>
+</ul>
+```
+
+-
+
+## History of HTML
+
+- Invented by Tim Berners-Lee in early 1990
+- Created "hypertext" to share scientific papers
+- Standardized by W3 Consortium
+
+-
+-
+
+## What is an HTML document?
+A text file of web page content wrapped in HTML tags.
+
+```
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>My test page</title>
+  </head>
+  <body>
+    <img src="images/firefox-icon.png" alt="My test image">
+  </body>
+</html>
+
+```
 -
 
 ## What is an HTML Element?
@@ -28,22 +83,48 @@
 
 -
 
+## Empty Elements
+
+Some elements do not have content, so they are self closing.
+
+```html
+<img src="images/zcw-logo.png" alt="Zip Code Wilmington">
+```
+
+<img src="img/Logo.jpg" alt="Zip Code Wilmington">
+
+-
+
+
 ## What is an HTML Attribute
+
+Provides additional information about the HTML element
 
 <img src="img/html-attribute.png" />
 
-Here, `class` is the attribute name and `editor-note` is the value
+`class` is the attribute name
 
-An attribute should always have:
-* A space between it and the element name (or the previous attribute, if the has more than one attribute).
-* The attribute name, followed by an equals sign.
-* Opening and closing quote marks wrapped around the attribute value.  
+ `editor-note` is the value
 
+-
+## Example of HTML attribute
+
+```
+<img id="apple-pic" src="apple.jpg" width="100px" height=300px />
+```
+
+- id
+- width
+- height
+
+-
 -
 
 ## Nesting elements
 
-You can place HTML elements inside other elements, but mind your opening and closing tags.
+You can place HTML elements inside other elements.
+
+Mind your opening and closing tags.
 
 Correct
 ```html
@@ -57,15 +138,6 @@ Incorrect
 
 -
 
-## Empty Elements
-
-Some elements do not have content, so they are self closing. Take `img` as an example: it has two attributes `src` and `alt`, but no content.
-
-```html
-<img src="images/zcw-logo.png" alt="Zip Code Wilmington">
-```
-
--
 
 ## Anatomy of an HTML Document
 
@@ -87,39 +159,118 @@ HTML elements aren't very useful on their own. We combine them to form an entire
 -
 
 ## Anatomy of an HTML document
+First line of an HTML document is the version.
 
-* ``<!DOCTYPE html>`` - Tells the browsers to interpret this document as an HTML document
-* ``<html></html>`` — Wraps all the content on the entire page, and is sometimes known as the root element.
-* ``<head></head>`` — Acts as a container for all the stuff you want to include on the HTML page that isn't the content you are showing to your page's viewers. This can include [metadata](https://developer.mozilla.org/en-US/docs/Learn/HTML/Introduction_to_HTML/The_head_metadata_in_HTML) like keywords or a description you want to show to search engines, CSS to style your page, and more.
+HTML5
+
+```html
+<!DOCTYPE html>
+```
+
+HTML 4
+
+```html
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+```
 
 -
 
 ## Anatomy of an HTML document
 
+### `<html>`
+
+After DOCTYPE, the page content must be contained between `<html>` tags.
+
+```html
+<!DOCTYPE html>
+<html>
+
+</html>
+```
+
+This is the root element.
+
+-
+## Anatomy of an HTML document
+
+### `<head>`
+
+The head contains the title of the page & meta information about the page. Meta information is not visible to the user, but has many purposes, like providing information to search engines.
+
+-
+## Anatomy of an HTML document
+
+### `<head>`
+
+* ``<title>My test page</title>`` Sets the title of your page, which is the title that appears in the browser tab.
+
+```html
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>My test page</title>
+  </head>
+</html>
+```
+-
+## Anatomy of an HTML document
+
+### `<head>`
+
 * ``<meta charset="utf-8">`` — this element sets the character set your document should use to UTF-8, which includes most characters from the vast majority of human written languages.
-* ``<title></title>`` — Sets the title of your page, which is the title that appears in the browser tab the page is loaded in. It is also used to describe the page when you bookmark/favourite it.
-* ``<body></body>`` — Contains all the content that you want to show to web users when they visit your page, whether that's text, images, videos, buttons or whatever else.
+
+
+```html
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>My test page</title>
+  </head>
+</html>
+```
+-
+
+## Anatomy of an HTML document
+### `<body>`
+
+Contains all the content that you want to show to the users (e.g. text, images, videos).
+
+```html
+<html>
+  <body>
+    <p>This is my fox. It is mine.</p>
+    <img src="images/firefox-icon.png" alt="My test image">
+  </body>
+</html>
+```
+
+-
+
+# DEMO
+- basic page
+- view source code
+- view Google source code
 
 -
 -
 
 ## Block vs Inline Element
 
-HTML elements are categorized as either block-level or inline-level elements. 
-
-A block-level element occupies the entire space of its parent element (container).
-
-Inline elements are those which only occupy the space bounded by the tags defining the element, instead of breaking the flow of the content. 
+HTML elements are categorized as either block-level or inline-level elements.
 
 -
 
 ## Block Level Elements
+A block-level element occupies the entire space of its parent element (container).
 
-<img src="img/block.png" />
+<img src="img/block.png" width=500px />
 
 -
 
 ## Inline Level Elements
+An inline element occupies enough space for the content (unless specify otherwise).
 
 <img src="img/inline.png" />
 
@@ -132,9 +283,7 @@ Inline elements are those which only occupy the space bounded by the tags defini
 
 ## Headings - Block Level
 
-Heading elements allow you to specify that certain parts of your content are headings — or subheadings — of your content. 
-
-HTML allows for 6 levels of heading, though you'll typically only use 1 - 4.
+Mark content as heading. HTML has 6 levels.
 
 ```html
 <h1>My main title</h1>
@@ -142,52 +291,77 @@ HTML allows for 6 levels of heading, though you'll typically only use 1 - 4.
 <h3>My subheading</h3>
 <h4>My sub-subheading</h4>
 ```
+
+<h1>My main title</h1>
+<h2>My top level heading</h2>
+<h3>My subheading</h3>
+<h4>My sub-subheading</h4>
 -
 
 ## Paragraphs - Block Level
 
-``<p>`` elements are for containing paragraphs of text; you'll use these frequently when marking up regular text content:
+Paragraphs of text.
 
 ```html
 <p>This is a single paragraph</p>
 ```
--
 
-## Lists - Block Level
-
-Marking up lists always consist of at least two elements, either `ul` or `ol` and `li`. The most common list types are ordered and unordered lists:
-
-* Unordered lists are for lists where the order of the items doesn't matter, like a shopping list. These are wrapped in a ``<ul>`` element.
-* Ordered lists are for lists where the order of the items does matter, like a recipe. These are wrapped in an ``<ol>`` element.
+<p>This is a single paragraph</p>
 
 -
 
 ## Lists - Block Level
+
+Unordered list is used to described a list with no order.
+
+By default, they are bullet points.
+
 
 ```html
-<p>Zip Code Wilmington is a community of dedicated</p>
 <ul>
-    <li>Staff</li>
-    <li>Instructors</li>
-    <li>Students</li>
+    <li>Cookies</li>
+    <li>Ice-cream</li>
+    <li>Fruits</li>
+</ul>
+```
+<ul>
+    <li>Cookies</li>
+    <li>Ice-cream</li>
+    <li>Fruits</li>
 </ul>
 
-<p>To apply to Zip Code Wilmington:</p>
+-
+## Lists - Block Level
+
+Ordered list is used to described a list with an order.
+
+By default, they are numbered items.
+
+```
+<h3>Table of content</h3>
 <ol>
-    <li>Submit an application</li>
-    <li>Attend a group interview</li>
-    <li>Take our assessment test</li>
+  <li>headers</li>
+  <li>paragraph</li>
+  <li>lists</li>
+  <li>image</li>
 </ol>
 ```
+
+<ol>
+  <li>headers</li>
+  <li>paragraph</li>
+  <li>lists</li>
+  <li>image</li>
+</ol>
 
 -
 
 ## Images - Inline
 
-Embed an image onto the page with the `<img/>` tag.
+<img src="img/Logo.jpg" alt="Zip Code Wilmington" title="Zip Code Wilmington" width=100px />
 
 ```html
-<img src="images/zcw-logo.png" alt="Zip Code Wilmington" title="Zip Code Wilmington" />
+<img src="images/zcw-logo.png" alt="ZCW" title="ZCW" />
 ```
 
 * ``src`` - path to the location of the image file
@@ -198,38 +372,65 @@ Embed an image onto the page with the `<img/>` tag.
 
 ## Links - Inline
 
-To add a link, use the ``<a></a>`` tag, "a" being short for "anchor". You can use absolute or relative uri paths. Content of the a tag can be text or another html element like an image.
+A is for `anchor`
 
 ```html
+<!-- link to an absolute path -->
 <a href="http://zipcodewilmington.com">Zip Code Wilmington</a>
 
+<!-- link to a relative path -->
 <a href="/apply">Apply Now</a>
 
+<!-- link to an absolute path with an image as the content -->
 <a href="http://zipcodewilmington.com">
     <img src="images/zcw-logo.png" alt="Zip Code Wilmington" title="Zip Code Wilmington" />
 </a>
 ```
 
-``href`` - short for hyperlink reference. Designates the uri you'd like to link to.
+``href`` - short for hyperlink reference.
+
+<a href="http://zipcodewilmington.com" target="_blank">Zip Code Wilmington</a>
+
+-
+
+## Relative vs. Absolute paths
+- ### Relative
+  - Relative paths change depending upon the page the link is on.
+  - Links within the same directory need no path information. "filename.jpg"
+  - Subdirectories are listed without preceding slashes. "img/filename.jpg"
+  - Root stars with `/`
+
+-
+## Relative vs. Absolute paths
+- ### Absolute
+  - Absolute paths refer to a specific location of a file, including the domain
+  - e.g. `http://yahoo.com/logo.jpg`
+  - Link that is not within your own domain
 
 -
 
 ## Forms - Block
 
-Forms consist of many individual html elements. All HTML forms start with a <form> element, which can contain various form controls.
+Used to send information to a server
+
+- create account
+- send tweet
 
 ```html
 <form>
-    <label for="firstName"></label>
-    <input id="firstName" type="text" />
+    <label for="username"></label>
+    <input id="username" type="text" />
+    <br>
+    <label for="password"></label>
+    <input id="password" type="text" />
 </form>
 ```
 
 -
 
-## Input - Block
+## Input - Inline
 
-The most common type of form control is ``<input>``. Input is a self closing element that can have various types, including:
+The most common type of form control is ``<input>``. Input types:
 
 * [Text](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/text) - ``<input type="text"/>``
 * [Checkbox](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/checkbox) - ``<input type="checkbox"/>``
@@ -241,24 +442,134 @@ The most common type of form control is ``<input>``. Input is a self closing ele
 
 -
 
-## Semantic Container Elements
+## Textarea - Inline
 
-In addition to defining individual parts of your page (such as "a paragraph" or "an image"), HTML also has a number of **semantic** elements used to define areas of your website, like the header, navigation menu, or main content. 
+Input for large text
+
+```
+<textarea rows="10" cols="100"></textarea>
+```
+
+<label for="biography">Biography</label>
+<textarea rows="10" cols="100">
+Now, this is a story all about how
+My life got flipped-turned upside down
+And I'd like to take a minute
+Just sit right there
+I'll tell you how I became the prince of a town called Bel Air
+
+I begged and pleaded with her day after day
+But she packed my suit case and sent me on my way
+She gave me a kiss and then she gave me my ticket.
+I put my Walkman on and said, 'I might as well kick it'.
+</textarea>
+
+-
+## Line/Ruler
+
+```
+<hr />
+```
+<hr />
+
+-
+## Space
+HTML ignores white space and new  line in the document.
+
+### Space
+
+```
+&nbsp;
+```
+a&nbsp;&nbsp;&nbsp;&nbsp;b
+
+-
+## Line break
+HTML ignores white space and new  line in the document.
+
+### Line break
+```
+<br \>
+```
+
+a<br>b
+-
+
+## Tables
+
+
+Tables are made up of rows and columns.
+
+<table>
+  <thead>
+    <th>ID</th>
+    <th>Name</th>
+  </thead>
+  <tbody>
+    <tr>
+      <td>1</td>
+      <td>Leon</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>Dolio</td>
+    </tr>
+  </tbody>
+</table>
 
 -
 
-## Basic Sections of an HTML Document
+## Tables
 
-* ``header`` - ``<header>`` Block level. Typically a big strip across the top with a big heading and/or logo.
-* ``navigation bar`` - ``<nav>`` Block level. Typically links to the site's main sections; usually represented by menu buttons, links, or tabs.
-* ``main content`` - ``<main>`` Block level. Typically a big area in the center that contains most of the unique content of a given webpage.
+
+Tables are made up of rows and columns.
+
+```html
+<table>
+  <thead>
+    <th>ID</th>
+    <th>Name</th>
+  </thead>
+  <tbody>
+    <tr>
+      <td>1</td>
+      <td>Leon</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>Dolio</td>
+    </tr>
+  </tbody>
+</table>
+```
 
 -
 
-## Basic Sections of an HTML Document
+## Comments
 
-* ``sidebar`` - ``<sidebar`` Block level. Typically some supporting info, links, quotes, ads, etc.
-* ``footer`` - ``<footer>`` Block level. A strip across the bottom of the page that generally contains fine print, copyright notices, or contact info.
+```
+<!-- Comment goes here -->
+```
+
+-
+-
+
+## History of HTML
+- HyperText Markup Language
+- Early 90s
+- HTML 4 in 1997
+- XHTML in 2000
+- HTML 5 in 2014
+
+-
+
+## HTML5 Components
+
+* `<header>` - top content (e.g. title, logo, and navigation)
+* `<nav>` - navigation
+* `<main>` - content
+* `<footer` - bottom content (e.g. contact info, copyright, sub navigation)
+
 -
 
 ## Basic Sections of an HTML Document
@@ -311,7 +622,7 @@ In addition to defining individual parts of your page (such as "a paragraph" or 
       <!-- the aside content can also be nested within the main content -->
       <aside>
         <h2>Related</h2>
-    
+
         <ul>
           <li><a href="#">Oh I do like to be beside the seaside</a></li>
           <li><a href="#">Oh I do like to be beside the sea</a></li>
@@ -331,201 +642,457 @@ In addition to defining individual parts of your page (such as "a paragraph" or 
 ```
 
 -
-
-## Generic Container Elements
-
-When you want to group content that doesn't fit one of the semantic html elements, you can use ``div``, a block level element, or ``span``, an inline element.
-
-These are especially useful when you want to target a group of elements with CSS or JS.
-
 -
 
-## Span
+## Span - Inline
 
-``<span>`` is an inline non-semantic element, which you should only use if you can't think of a better semantic text element to wrap your content, or don't want to add any specific meaning.
+When you need to add inline style and you can't think of a better tag, use span.
 
-```html
-<p>The King walked drunkenly back to his room at 01:00, the beer doing nothing to aid
-him as he staggered through the door <span class="editor-note">[Editor's note: At this point in the
-play, the lights should be down low]</span>.</p>
+```
+<p>this is <span style="color:red">red</span></p>
 ```
 
+<p>this is <span style="color:red">red</span></p>
+
 -
 
-## Div
+## Div - Block
 
-``<div>`` is a block level non-semantic element, which you should only use if you can't think of a better semantic block element to use, or don't want to add any specific meaning.
+When you need to wrap elements and can't think of a better tag.
 
 ```html
 <div class="shopping-cart">
   <h2>Shopping cart</h2>
-  <ul>
-    <li>
-      <p><a href=""><strong>Cashmere sweater</strong></a>: $99.95.</p>
-      <img src="../products/3333-0985/thumb.png" alt="Cashmere sweater">
-    </li>
-    <li>
-      ...
-    </li>
-  </ul>
+      <p><a href="">Cashmere sweater</a>: $99.95.</p>
+      <img src="img/cash.png" alt="Cashmere sweater">
   <p>Total cost: $237.89</p>
 </div>
 ```
+-
+-
+
+## HTML Resources
+- [MDN HTML API](https://developer.mozilla.org/en-US/docs/Web/HTML/Element)
+- [Khan academy](https://www.khanacademy.org/computing/computer-programming/html-css)
+- [Common Tags](http://www.washington.edu/accesscomputing/webd2/student/unit2/common_tags.html)
+- [FreeCodeCamp](https://www.freecodecamp.org)
+- [HTML & CSS Book](http://htmlandcssbook.com/code-samples/chapter-01/)
 
 -
 -
 
+<img src="http://2.bp.blogspot.com/_UjJgEwVlPQs/Sxg-OdZMD0I/AAAAAAAADlg/gkTWJLBTaOM/s1600/Golden_Retriever_Puppies.jpg" width="800px">
+
+-
+-
 ## CSS
 
 -
 
-## What is CSS?
+## Anatomy of a website
 
-CSS stands for Cascading Style Sheets. It is a style sheet language for expressing the presentation, including colors, layout, sizes, and more, of a structured document like HTML, XML or SVG.
-CSS applies styles through CSS rules.
+* HTML - content
+* CSS - presentation
+* Javascript - interaction
 
 -
+## What is CSS?
 
-## What is a CSS rule?
+CSS stands for Cascading Style Sheets.
 
-* ``selector`` - selects the element(s) you want to apply the updated property values to. 
-* ``properties`` - A set of properties with corresponding values set to update how the HTML content is displayed.
+It adds styles to the content (HTML).
 
 ```CSS
 header {
     background-color: teal;
     height: 160px;
 }
+
+header p {
+  background-color: green;
+}
 ```
+
 -
 
-## Using HTML and CSS
+## What is a CSS rule?
 
-```html
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8">
-    <title>My CSS experiment</title>
-    <link rel="stylesheet" href="style.css">
-  </head>
-  <body>
-    <h1>Hello World!</h1>
-    <p>This is my first CSS example</p>
-  </body>
-</html>
+<img src="img/cssrule.png">
+
+-
+-
+## Selector: Element
+
+```
+p {
+  background-color: blue;
+}
 ```
 
-```CSS
-h1 {
-  color: pink;
-  background-color: aqua;
-  border: 1px solid purple;
+Selects all paragraph elements.
+
+```
+img {
+  width: 100px;
+}
+```
+
+Selects all image elements.
+
+-
+## Selector: Position
+
+```
+p em {
+  color: yellow;
+}
+```
+
+Selects all `em` elements that are within a paragraph
+
+```
+<p>This is <em>important.</em></p>
+```
+
+<p>This is <em style="color:yellow">important.</em></p>
+
+-
+## Selector: Position
+- Position selectors are more specific
+- They look for elements inside other elements
+- We separate nested elements with a space
+- Position selectors will override general selector
+
+```
+header ul {
+  <!-- text in header ul is red (except if it's a link) -->
+  color: red;
 }
 
-p {
+ul {
+   <!-- all text in a list is green (except header list) -->
   color: green;
 }
-```
 
--
-
-## How does CSS work?
-
-When a browser displays a document, it must combine the document's content with its style information. It processes the document in two stages:
-
-* Converts HTML and CSS into the DOM (Document Object Model)
-    * The DOM represents the document in the computer's memory, combining the document's content with its style.
-* Displays the contents of the DOM
-
--
-
-## What is the DOM
-
-The Document Object Model (DOM) is a **programming interface** for HTML and XML documents. It represents the page so that programs can change the document structure, style, and content. The DOM represents the document as nodes and objects. That way, programming languages can connect to the page.
-
--
-
-## The DOM Tree
-
-The DOM has a tree-like structure. Each element, attribute and piece of text in HTML becomes a DOM node. Nodes are defined by their relationship to other nodes. Some elements are parents of child nodes, and child nodes have siblings.
-
-```html
-<p>
-  Welcome to:
-  <span>Zip</span>
-  <span>Code</span>
-  <span>Wilmington</span>
-</p>
-```
-
-```
-P
-├─ "Welcome to:"
-├─ SPAN
-|  └─ "Zip"
-├─ SPAN
-|  └─ "Code"
-└─ SPAN
-   └─ "Wilmington"
-```
-
--
-
-## How does CSS work?
-
-<img src="img/how-css-works.png" />
-
--
-
-## Applying CSS to the DOM
-
-```CSS
-span {
-  border: 1px solid blue;
-  background-color: aqua;
+ul li a{
+  <!-- link text is purple -->
+  color: purple;
 }
 ```
 
-<img src="img/CSS-DOM.png" />
+-
+-
+
+## CSS Color Values
+
+Your browser can accept colors in many different ways:
+
+- Hexadecimal value (ex. #FF0000)
+- RGB value (ex. rgb(255, 0, 0))
+- HSL value (ex. hsl(0, 100%, 100%))
+- Color name (ex. red)
+  - The 17 standard colors are: aqua, black, blue, fuchsia, gray, grey, green, lime, maroon, navy, olive, purple, red, silver, teal, white, and yellow.
+
+-
+## Color
+
+The `color` property changes the color of the text.
+
+Hexadecimal (most common)
+
+```
+p {
+  color: #ff0000;
+}
+```
+
+RGB values
+
+```
+p {
+  color: rgb(255, 0, 0);
+}
+```
+
+Color name
+
+```
+p {
+  color: red;
+}
+```
 
 -
 
-## Applying CSS to the DOM
+## Background
 
-There are 3 ways to apply CSS to an HTML document
-* External Stylesheets
-* Internal Stylesheets
-* Inline Styles
+```
+p {
+  <!-- set background color -->
+  background-color: #81D8D4;
+
+  <!-- set background image. This will override color -->
+  background-image: url('img/castle.jpg');
+
+  <!-- does not move -->
+  background-position: fixed;
+
+  <!-- repeats vertically -->
+  background-repeat: repeat-y;
+}
+```
+
+```
+p {
+  <!-- set everything in one line -->
+  background: #81D8D4 url('img/castle.jpg') fixed repeat-y;
+}
+```
+
+<p style="background-color:#81D8D4">this is a paragraph with background</p>
+
+[MDN](https://developer.mozilla.org/en-US/docs/Web/CSS/background)
 
 -
-    
-## External Stylesheets
 
-Styled through an external stylesheet, linked through the ``<link>`` tag.
+## Font
+
+```
+p {
+  font-family: "Arial", sans-serif;
+  font-size: 16px;
+  font-weight: bold;
+  font-style: italic;
+}
+```
+
+```
+p {
+  <!-- set everything in one line -->
+  font: bold italic 16px "Arial", sans-serif;
+}
+```
+-
+
+## Font-size
+The font-size property specifies the size of the font.
+
+```
+p {
+  <!-- Pixels -->
+  font-size: 12px;
+
+  <!-- em - 150% more than the inherited size  -->
+  font-size: 1.5em;
+
+  <!-- percent - 150% more than the inherited size -->
+  font-size: 150%;
+}
+```
+
+[W3 school](https://www.w3schools.com/cssref/tryit.asp?filename=trycss_font)
+-
+
+## Font-size
+The font-size property specifies the size of the font.
+
+```
+p {
+  text-align: center;
+  line-height: 16px;
+  vertical-align: super;
+  letter-spacing: 10px;
+}
+```
+
+[W3 school](https://www.w3schools.com/cssref/pr_pos_vertical-align.asp)
+
+-
+## List
+
+```
+ul {
+  list-style: square url("sqpurple.gif");
+}
+
+```
+-
+-
+
+## Spacing
+
+<img src="https://pressupinc.com/wp-content/uploads/2014/01/box-model.png">
+
+- padding
+- border
+- margin
+
+-
+
+## Padding
+
+The space between the content and its border. [W3 School](https://www.w3schools.com/cssref/pr_padding.asp)
+
+```
+p {
+  padding-top: 10px;
+  padding-right: 5px;
+  padding-bottom: 30px;
+  padding-left: 20px;
+}
+```
+
+```
+p {
+  <!-- top, right, bottom, left -->
+  padding: 10px 5px 30px 20px;
+}
+```
+
+```
+p {
+  <!-- top & bottom is 10px, left & right is 20px -->
+  padding: 10px 20px;
+}
+```
+
+```
+p {
+  <!-- everything is 10px -->
+  padding: 10px;
+}
+```
+
+-
+
+## Border
+
+```
+p {
+  border: solid 1px #00ff00;
+}
+
+```
+
+```
+p {
+  border-top: solid 1px #0f0;
+  border-bottom: solid 1px #f00;
+  border-left: solid 1px #00f;
+  border-right: solid 1px #000;
+}
+
+```
+
+<p style="border: solid 1px #00ff00;">Border</p>
+
+-
+
+## Margin
+
+```
+p {
+  margin: solid 1px #00ff00;
+}
+
+```
+
+```
+p {
+  margin-top: solid 1px #0f0;
+  margin-bottom: solid 1px #f00;
+  margin-left: solid 1px #00f;
+  margin-right: solid 1px #000;
+}
+
+```
+-
+## Spacing
+
+<img src="https://pressupinc.com/wp-content/uploads/2014/01/box-model.png">
+
+-
+-
+## Position
+
+```
+p {
+  position: fixed;
+  top: 40px;
+  right: 100px;
+}
+```
+
+- fixed - starts from the top left document
+- relative - relative to other documents
+
+[MDN Position](https://developer.mozilla.org/en-US/docs/Web/CSS/position)
+-
+
+## Size
+
+```
+p {
+  width: 50%;
+  height: 300px;
+}
+```
+
+-
+-
+
+## Connecting CSS to HTML
+- "Inline"
+- "Embedded"
+- "External"
+
+-
+
+## Inline
+
+```
+<p style="color:red">Some text.</p>
+```
+
+Applies to specific element
+
+Can't be reused
+
+DON'T DO IT!
+
+(unless you really really have to)
+
+-
+## Embedded
+```
+<head>
+  <style type="text/css">
+    p {
+      color: red;
+      font-size: 12px;
+    }
+  </style>
+</head>
+```
+
+Inside <head> of the HTML document.
+
+Uses `<style>` tag.
+
+Can only be used in one HTML file
+
+-
+
+## External
 
 index.html
+
 ```html
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8">
-    <title>My CSS experiment</title>
-    <link rel="stylesheet" href="style.css">
-  </head>
-  <body>
-    <h1>Hello World!</h1>
-    <p>This is my first CSS example</p>
-  </body>
-</html>
+  <h1>Hello World!</h1>
 ```
--
-
-## External Stylesheets
-
-Styled through an external stylesheet.
 
 style.css
+
 ```CSS
 h1 {
   color: pink;
@@ -537,94 +1104,11 @@ p {
   color: green;
 }
 ```
--
-
-## Internal Stylesheets
-
-Styled through an internal ``<style>`` tag.
-
-```html
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8">
-    <title>My CSS experiment</title>
-    <style>
-      h1 {
-        color: pink;
-        background-color: aqua;
-        border: 1px solid purple;
-      }
-      
-      p {
-        color: green;
-      }
-    </style>
-  </head>
-  <body>
-    <h1>Hello World!</h1>
-    <p>This is my first CSS example</p>
-  </body>
-</html>
-```
 
 -
-
-## Inline Styles
-
-Styled through the ``style`` property on an individual html element.
-
-```html
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8">
-    <title>My CSS experiment</title>
-  </head>
-  <body>
-    <h1 style="color: pink;background-color: aqua;border: 1px solid purple;">Hello World!</h1>
-    <p style="color: green;">This is my first CSS example</p>
-  </body>
-</html>
-```
-
 -
 
-## CSS Declarations
-
-CSS declarations consist of two building blocks:
-
-* Properties: Human-readable identifiers that indicate which stylistic features (e.g. font, width, background color) you want to change.
-* Values: Each specified property is given a value, which indicates how you want to change that property.
-
--
-
-## CSS Declarations
-
-A property paired with a value is called a ``CSS declaration``. 
-
-<img src="img/css-syntax.png" />
-
--
-
-## CSS Rule Sets
-
-CSS Rule Sets consists of: 
-* A CSS Declaration Block
-    * One or more CSS declarations
-* One or more CSS selectors
-
-<img style="width: 560px" src="img/css-ruleset.png" />
-
--
-
-## CSS selectors
-
-CSS selectors are used to target the HTML elements we want to style. There are a wide variety of CSS selectors available, allowing for precise targeting when selecting elements to style. 
-
--
-
-## Tag Selectors
+## CSS selectors : Tag
 
 You can select elements by their html tag name.
 
@@ -659,16 +1143,13 @@ h4 {
 
 -
 
-## Combination selectors
+## Descendant Selector
 
-CSS has several ways to select elements based on how they are related to one another. Those relationships are expressed with combinators.
+Specifically targets any h1 that is a descendant (or nested within) a header
 
 ```CSS
-/* Specifically targets any <h1> that 
-is a descendant (or nested within)
-a <header> */
 header h1 {
-    color: red;
+    font-size: 60px;
 }
 
 h1 {
@@ -676,307 +1157,223 @@ h1 {
 }
 ```
 
-[All about combining CSS selectors](https://developer.mozilla.org/en-US/docs/Learn/CSS/Introduction_to_CSS/Combinators_and_multiple_selectors)
-
 -
 
-## Evaluating CSS
+## Child Selector
 
-CSS is read from top to bottom, with declarations later in the file overriding declarations earlier in the file.
+Specifically targets direct child of tag `p` of type `<a>`
 
 ```CSS
-h1 {
-    color: pink;
-    font-size: 32px;
-    color: blue;
-}
-
-h1 {
-    color: black;
+p > a {
+  color: red;
 }
 ```
-``<h1>`` elements will receive a color of black and a font-size of 32px.
+
+- [Google](http://google.com)
+
+<p>this is a paragraph with link to <a href="http://yahoo.com" style="color:red">Yahoo</a><p>
+
 
 -
 
-## CSS Specificity
+## Sibling Selector
 
-CSS rules are also evaluated based on their specificity. If more than one CSS rule sets applies to a particular element, 
-and individual CSS declarations are in conflict with one another, the declaration present in the more **specific** CSS ruleset will win.
-
-[All About CSS Specificity](https://developer.mozilla.org/en-US/docs/Web/CSS/Specificity)
-
--
-
-## CSS Specificity
-```html
-<body>
-    <header>
-        <p>I'm an paragraph in the header</p>
-    </header>
-    <p>
-        I'm a p outside of the header
-    </p>
-</body>
-```
+Specifically targets any h1 that is a descendant (or nested within) a header
 
 ```CSS
-p {
-    color: purple;
-    font-size: 16px;
-}
-
-header p {
-    font-size: 22px;
+li+li {
+  color: red;
 }
 ```
 
-<img style="width: 420px" src="img/css-specificity.png" />
-
--
-
-## Class selectors
-
-The class selector consists of a dot, `.`, followed by a class name. A class name is any value, without spaces, placed within an HTML class attribute. It is up to you to choose a name for the class. Multiple elements can have the same class value, and a single element can have multiple classes separated by a space.
-
--
-
-## Class selectors
-
-```html
-<h3>Shopping List</h3>
 <ul>
-  <li class="priority">Eggs</li>
-  <li class="purchased">Butter</li>
-  <li class="priority purchased">Milk</li>
+  <li>Chapter 1</li>
+  <li style="color:red">Chapter 2</li>
+  <li style="color:red">Chapter 3</li>
 </ul>
+
+-
+## Id selector
+
+```
+<p id="bio">This is bio</p>
+<p>nothing to see here</p>
 ```
 
-```CSS
-.priority {
-    font-weight: bold;
-}
-
-.purchased {
-    text-decoration: line-through;
+```
+#bio {
+  color:red;
 }
 ```
 
-<img src="img/css-classes.png" />
+<p style="color:red">This is bio</p>
+<p>nothing to see here</p>
+
 
 -
 
-## Id Selectors
+## Class selector
 
-The ID selector consists of a hash/pound symbol ``#``, followed by the ID name of a given element. Any element can have a **UNIQUE** ID set with the ``id`` attribute. It is up to you to choose an ID name. It's the most efficient way to select a single element.
+```
+<button class="primary">Submit</button>
+<button>Next</button>
+```
 
-[Example](https://codepen.io/dominiqueclarke/pen/yRJmPG) 
+```
+.primary {
+  color:red;
+}
+```
 
--
-
-## The Box Model
-
-<img style="width: 620px" src="img/the-box-model.png" />
-
--
-
-## CSS Positioning
-
-[Learn All About CSS Positioning](https://developer.mozilla.org/en-US/docs/Learn/CSS/CSS_layout)
-
--
--
-
-## JavaScript and the DOM
+<button style="color:red; font-size:30px">Submit</button>
+<button style="font-size:30px">Next</button>
 
 -
 
-## DOM Review
+## Class child selector
 
-The Document Object Model (DOM) is a **programming interface** for HTML and XML documents. It represents the page so that programs can change the structure, style, and content. The DOM represents the document as nodes and objects. The page content is stored in the DOM and may be accessed and manipulated via JavaScript.
+```
+.bio .header {
+    font-size: 60px;
+}
 
+```
+
+```
+<h2 class="header">Bio</h2>
+
+<div class="bio">
+  <!--  this header font size is 60px -->
+  <h2 class="header">Early years</h2>
+
+</div>
+```
 -
 
-## DOM Review
-
-The DOM has a tree-like structure. Each element, attribute and piece of text in HTML becomes a DOM node. Nodes are defined by their relationship to other nodes. Some elements are parents of child nodes, and child nodes have siblings.
+## Attribute selector
 
 ```html
-<p>
-  Welcome to:
-  <span>Zip</span>
-  <span>Code</span>
-  <span>Wilmington</span>
-</p>
-```
+<label for="username">Username</label>
+<input id="username" type="text" />
+<br>
+<label for="icecream">Love ice-cream?</label>
+<input id="icecream" type="checkbox" />
 
 ```
-P
-├─ "Welcome to:"
-├─ SPAN
-|  └─ "Zip"
-├─ SPAN
-|  └─ "Code"
-└─ SPAN
-   └─ "Wilmington"
+
+Select by attribute
+
+```
+[type="checkbox"] {
+ font-size:40px;
+}
+```
+
+Select by tag with a given attribute
+
+```
+input[type="checkbox"] {
+ font-size:40px;
+}
+```
+
+-
+-
+
+## Inherit
+
+Children inherit attributes from their parents
+
+```
+body {
+  font: "Arial";
+}
+
+header {
+  font: "Times"
+}
+```
+
+-
+## Inherit Property
+
+```
+/* Make second-level headers green */
+h2 { color: green; }
+
+/* header in sidebar will inherit from the parent class */
+#sidebar h2 { color: inherit; }
 ```
 
 -
 
-## Using JavaScript within an HTML document
+## Inherit
 
-```html
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8">
-    <title>My page title</title>
-  </head>
-  <body>
-    <h1>My first HTML document</h1>
-    
-    <p>Hello world!</p>
-    
-    <!-- Linking external JavaScript file -->
-    <script type="text/javascript" src="javascript.js"></script>
-    
-    <!-- Inline JavaScript -->
-    <script>
-        window.onload = function() {
-         // create a couple of elements in an otherwise empty HTML page
-         var heading = document.createElement("h1");
-         var heading_text = document.createTextNode("Big Head!");
-         heading.appendChild(heading_text);
-         document.body.appendChild(heading);
-        }
-    </script>
-  </body>
-</html>
+- All browser have some type of defaults
+- Designer usually `normalize` (reset) all the elements so left 10px means left 10px everywhere
+
+-
+-
+## Cascading
+Styles "cascade" down until changed
+
+```
+p{
+  color:blue;
+  font-family: 'Helvetica';
+}
+.red {
+  color: red;
+}
+#special {
+  font-family: Arial;
+}
+```
+
+```
+<p>Paragraph</p>
+<p class ="red">Paragraph</p>
+<p class = "red" id ="special">Paragraph</p>
 ```
 
 -
 
-## Manipulating the DOM
+## Cascading priority
+Your browser assigns different priorities to CSS depending on the type of selector.
 
-```JavaScript
-// run this function when the document is loaded
-window.onload = function() {
- // create a couple of elements in an otherwise empty HTML page
- var heading = document.createElement("h1");
- var heading_text = document.createTextNode("Big Head!");
- heading.appendChild(heading_text);
- document.body.appendChild(heading);
+1. Important! - Most Important
+2. In line CSS
+3. ID
+4. Class
+5. Element - Least Important
+
+-
+
+## Cascading priority
+Your browser also assigns priority based on the specificity of the selection. More specific selectors have higher priority.
+
+```
+.main .sale .clearance p{ //Most specific
+  color: red;
+}
+.header .title p{
+  color: green;
+}
+.footer p{ //Least specific
+  color: blue;
 }
 ```
 
 -
 
-## Key DOM Objects
-
-[``window``](https://developer.mozilla.org/en-US/docs/Web/API/window)
-
-* Root level element in any web page
-* All the global variables are defined on the window object.
-For example, alert(), confirm() are methods defined on the window object.
-Writing alert() is the same as writing window.alert()
-* Properties like ``document`` are properties of the window object.
-window API
+## Demo
+- view CSS property of an element in the browser
+- modify property
 
 -
-
-## Key DOM Objects
-
-[``document``](https://developer.mozilla.org/en-US/docs/Web/API/Document)
-
-* The direct child of the window object. 
-* Access it via window.document or document.
-* Has many useful methods defined on it, including: 
-    * ``document.getElementById()``
-    * ``document.getElementByTagName()``
-    * ``document.createElement()``
-    * ``document.querySelector()``
-    
--
-
-## Key DOM Types
-
-[``Element``](https://developer.mozilla.org/en-US/docs/Web/API/element)
-
-* Refers to an element or a node of type element returned by a member of the DOM API.
-* Nodes of type element are essentially DOM representations of specific HTML elements 
-* Element objects implement the DOM Element interface and also the more basic Node interface, both of which are included together in this reference.
+## Resources
+ - [MDN CSS](https://developer.mozilla.org/en-US/docs/Web/CSS)
+ - [W3schools CSS](https://www.w3schools.com/cssref/default.asp)
 
 -
-
-## Key DOM Types
-
-[``NodeList``](https://developer.mozilla.org/en-US/docs/Web/API/nodelist)
-
-* Refers to an array of elements
-* Returned by element selectors that match to multiple elements, like ``document.getElementsByTagName()``
-* You can access individual elements in the array using typical array notation. 
-
--
-
-## Key Window Interfaces
-
-* window.content
-* window.onload
-* window.dump()
-* window.scrollTo()
-
--
-
-## Key Document Interfaces
-
-* document.getElementById(id)
-* document.getElementsByTagName(name)
-* document.createElement(name)
-
--
-
-## Key Element Interfaces
-
-* element.appendChild(node)
-* element.innerHTML
-* element.style.*
-* element.setAttribute()
-* element.getAttribute()
-* element.addEventListener()
-
--
-
-## Key DOM Interfaces
-
-[More About DOM Interfaces](https://developer.mozilla.org/en-US/docs/Web/API/Document_Object_Model/Introduction#DOM_and_JavaScript#Core_Interfaces_in_the_DOM)
-
--
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  
-
-
-
-
-
-
-
-
-
-
-
+<img src="http://cdn7.whiskeyriff.com/wp-content/uploads/cutest-puppy-ever-1384460985_org.jpg">

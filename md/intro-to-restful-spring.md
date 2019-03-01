@@ -1,10 +1,23 @@
-# Intro to RESTful Spring
+# Intro to the Web
+
+-
+
+## What is a Server?
+A server is a computer program or a device that provides functionality for other programs or devices (aka clients).
 
 -
 ### What is REST?
 
-- REST stands for **RE**presentational **S**tate **T**ransfer and is an architectural style for designing distributed network applications
-- More precisely, REST is an architectural style consisting of a coordinated set of architectural constraints applied to components, connectors, and data elements, within a distributed [hypermedia](https://en.wikipedia.org/wiki/Hypermedia) system.
+- REST stands for **RE**presentational **S**tate **T**ransfer
+* It is an architectural style that defines a set of constraints and properties based on HTTP
+* It relies on a stateless, client-server, cacheable communications protocol (usually HTTP)
+
+-
+
+# What is REST?
+* Uses HTTP verbs to get and modify data
+* resources being identified by an identifier (URL)
+  * `GET /user/123`
 
 -
 ### Client-Server
@@ -92,21 +105,6 @@ Replaces all current representations of the target resource with the uploaded co
 Removes all current representations of the target resource given by a URI.
 
 -
-### HTTP `CONNECT` Method
-
-Establishes a tunnel to the server identified by a given URI.
-
--
-### HTTP `OPTIONS` Method
-
-Describes the communication options for the target resource.
-
--
-### HTTP `TRACE` Method
-
-Performs a message loop-back test along the path to the target resource.
-
--
 -
 # CRUD
 
@@ -144,18 +142,18 @@ As a WebDAV request may contain many sub-requests involving file operations, it 
 -
 #### 2xx Success
 
-- 200 OK 
+- 200 OK
   - Standard response for successful HTTP requests.
-- 201 CREATED 
+- 201 CREATED
   - Request has been fulfilled and resulted in a new resource being created.
-- 202 Accepted 
-  - Request has been accepted for processing, but the processing has not been completed. The request might or might not eventually be acted upon, as it might be disallowed when processing actually takes place. 
+- 202 Accepted
+  - Request has been accepted for processing, but the processing has not been completed. The request might or might not eventually be acted upon, as it might be disallowed when processing actually takes place.
 
 -
 #### 3xx Redirection
 
 - 300 Multiple Choices
-  - Indicates multiple options for the resource that the client may follow. 
+  - Indicates multiple options for the resource that the client may follow.
 - 301 Moved Permanently
   - This and all future requests should be directed to the given URI
 - 308 Permanent Redirect
@@ -184,58 +182,6 @@ A protocol providing full-duplex communication channels over a single TCP connec
 A **servlet** is a small Java program that runs within a Web server. **Servlets** receive and respond to requests from Web clients, usually across HTTP, the HyperText Transfer Protocol.
 
 -
-### Aspect-Oriented Programming
-
-Aspect-Oriented Programming (**AOP**) complements Object-Oriented Programming (OOP) by providing another way of thinking about program structure. The key unit of modularity in OOP is the class, whereas in **AOP** the unit of modularity is the aspect. Aspects enable the modularization of concerns, such as transaction management that cut across multiple types and objects.
-
 -
-### ORM
-
-Object-relational mapping (**ORM**) is a technique (a.k.a. design pattern) of accessing a relational database from an object-oriented language (Java, for example)
-
--
-### JMS
-
-**JMS** is a part of the Java Platform, Enterprise Edition, and is defined by a specification developed under the Java Community Process as JSR 914. It is a messaging standard that allows application components based on the Java Enterprise Edition (Java EE) to create, send, receive, and read messages.
-
--
-### Transaction
-
-In computer programming, a transaction usually means a sequence of information exchange and related work (such as [database](http://searchsqlserver.techtarget.com/definition/database) updating) that is treated as a unit for the purposes of satisfying a request and for ensuring database integrity.
-
--
-### Bean
-
-A **bean** is an object that is instantiated, assembled, and otherwise managed by a **Spring IoC** container. These **beans** are created with the configuration metadata that you supply to the container
-
--
-### Inversion Of Control (IOC)
-
-In software engineering, inversion of control (IoC) describes a design in which custom-written portions of a computer program receive the flow of control from a generic, reusable library.
-
--
-### Dependency Injection (DI)
-
-**Dependency Injection** design pattern allows us to remove the hard-coded dependencies and make our application loosely coupled, extendable and maintainable.
-
--
-### `@RequestParam` annotation
-
-The `@RequestParam` annotation is used to bind Servlet request parameters to handler/controller method parameters.
-
--
-### `@RequestMapping`
-
-`@RequestMapping` annotation is used to map a Web request to a handler class or handler method
-
--
-
-```Java
-@RequestMapping(value="/saveuser.html", method=RequestMethod.POST)
-public String saveUser(@RequestParam String username,
-                       @RequestParam String password) 
-{
-	// Save User logic
-	return "success";
-}
-```
+## Spring Data JPA
+- improves the implementation of data access layers by writing the boiler plate for you

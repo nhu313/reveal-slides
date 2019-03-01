@@ -1,32 +1,28 @@
 ## Streams
 -
-
+-
 ## What is a Stream?
 
-A stream is a sequence of objects that supports various methods which can be pipelined to produce the desired result
-
-A stream is not a data structure instead it takes input from the Collections, Arrays or I/O channels
+* a sequence of objects
 
 -
-### What is a Stream?
+## What is a Stream?
 
 * Specify what to be done, rather than how/when to do it
 * Can operate on elements in parallel
 
 -
-### Processing a stream
+## Processing a stream
 1. Create a stream
 2. Specify intermediate(/transformation) operations (e.g. filter, map)
 3. Apply terminal operation to produce a result (e.g. toSet, reduce)
 
 -
-### Stream
+## Stream
 You can only apply terminal operation once.
 
 -
--
-
-### Stream Creation
+## Stream Creation
 
 Array strategy #1
 
@@ -40,7 +36,7 @@ public Stream<String> fromArray1(String[] stringArray) {
 ```
 
 -
-### Stream Creation
+## Stream Creation
 Array strategy #2
 
 ```Java
@@ -53,7 +49,7 @@ public Stream<String> fromArray2(String[] stringArray) {
 ```
 
 -
-### Stream Creation
+## Stream Creation
 From varargs
 
 ```Java
@@ -67,7 +63,7 @@ public Stream<String> fromVarargs() {
 ```
 
 -
-### Stream Creation
+## Stream Creation
 List
 
 ```Java
@@ -78,8 +74,34 @@ public Stream<String> fromList(List<String> stringList) {
     return stringStream;
 }
 ```
+
 -
-### Stream Creation
+## Stream Creation
+`.generate` - creates an infinite stream by calling a function
+
+```Java
+/** @return endless stream */
+public Stream<Double> fromGenerator2() {
+    Stream<Double> randoms = Stream.generate(Math::random);
+    return randoms;
+}
+```
+
+-
+## Stream Creation
+
+`.generate` - creates an infinite stream with a value
+
+```Java
+/** @return endless stream */
+public Stream<String> fromGenerator1() {
+    Stream<String> stringStream = Stream.generate(() -> "Echo");
+    return stringStream;
+}
+```
+
+-
+## Stream Creation
 `.empty`
 
 ```Java
@@ -89,8 +111,19 @@ public Stream<String> fromEmpty() {
 ```
 
 -
+## Stream Creation
+`.iterate`
 
-### Extracting substreams
+```Java
+public Stream<String> fromIterator() {
+	return Stream.iterate(1, x -> x + 2);
+}
+```
+
+-
+-
+
+## Extracting substreams
 
 ```Java
 public Stream<String> getSubStream(String[] stringArray, int startIndex, int endIndex) {
@@ -103,7 +136,7 @@ public Stream<String> getSubStream(String[] stringArray, int endIndex) {
 ```
 
 -
-### Combining substreams
+## Combining substreams
 
 `Stream.concat` concatenates two streams
 
@@ -118,10 +151,10 @@ public Stream<String> combineStreams(String[] array1, String[] array2) {
 
 -
 -
-## Method References
+## Transformations
 
 -
-### Method References `::`
+## Method References `::`
 * Because Java 7 has no syntax to enable a method being passed as an argument, the `::` syntax was introduced in Java 8 to reference methods.
 
 Instance method of a class
@@ -132,39 +165,7 @@ words.forEach(System.out::print);
 ```
 
 -
-
-### Method References `::`
-`.generate` - creates an infinite stream by calling a static function
-
-```Java
-/** @return endless stream */
-public Stream<Double> fromGenerator() {
-    Stream<Double> randoms = Stream.generate(Math::random);
-    return randoms;
-}
-```
-
--
-
-### Method References `::`
-`.generate` - creates an infinite stream by calling a instance function
-
-```Java
-/** @return endless stream */
-public Stream<Double> fromGenerator() {
-    Stream<Double> echos = Stream.generate(this::echo);
-    return echos;
-}
-
-public String echo() {
-    return "Echo";
-}
-
-
-```
-
--
-### Functional Interface
+## Method References `::`
 Instance method of a class
 
 ```java
@@ -183,6 +184,39 @@ class DemoSquareMaker {
 }
 ```
 -
+## Method References `::`
+Instance method of a class
+
+```java
+Stream.of(1, 4, 4, 7, 1).min(Integer::compare);
+```
+
+-
+## Method References `::`
+Instance method in the current class
+
+```Java
+public void testMin(){
+    Optional<Integer> min = Stream.of(1, 4, 4, 7, 1).min(this::compare);
+}
+
+public int compare(Integer x, Integer y){
+    return x - y;
+}
+```
+
+-
+## Method References `::`
+Static method
+
+```Java
+public Stream<Double> fromMathRandom() {
+    Stream<Double> randoms = Stream.generate(Math::random);
+    return randoms;
+}
+```
+
+-
 -
 # Transformations
 -
@@ -197,14 +231,10 @@ class DemoSquareMaker {
 `filter` yields a new stream with <br>elements that match the specified criteria
 
 ```Java
-public Stream<String> getStringsLongerThan(String[] arr, int length) {
-    return Arrays
-            .stream(stringArray)
-            .filter(this::stringIsLongerThan4);
-}
 
-public boolean stringIsLongerThan4(String str) {
-    return str.length() > 4;
+public Stream<String> getStringsLongerThan(String[] stringArray, int length) {
+    return Arrays.stream(stringArray)
+            .filter(word -> word.length() < length);
 }
 ```
 
@@ -213,16 +243,10 @@ public boolean stringIsLongerThan4(String str) {
 `map` takes an argument of a function, applies the function to each element, and returns the respective stream
 
 ```Java
-public List<Integer> mapArrayLengths(String[] arr) {
-    return Arrays
-            .stream(arr)
-            .map(this::length)
-            .collect(Collectors.toList());
-}
+Stream<String> words = Stream.of("pear", "apple", "orange", "grage");
 
-public Integer length(String x) {
-    return x.length();
-}
+List<Integer> sizes = words.map(x -> x.length())
+                            .collect(Collectors.toList());
 ```
 
 -
@@ -236,7 +260,7 @@ public Stream<String> letters(String someWord) {
 }
 
 public Stream<String> wordsFlatMap(String[] stringArray) {
-    return Arrays.stream(stringArray).flatMap(this::letters);
+    return Arrays.stream(stringArray).flatMap(x -> letters(x));
 }
 ```
 
@@ -264,11 +288,7 @@ or you must supply a Comparator
 
 ```Java
 public Stream<String> sort(String[] words) {
-    return Arrays.stream(words).sorted(this::compareStringsLength);
-}
-
-public int compareStringsLength(String str1, String str2) {
-    return str1.length() - str2.length();
+    return Arrays.stream(words).sorted((x, y) -> x.length() - y.length());
 }
 ```
 
@@ -308,7 +328,7 @@ public Optional<String> getMax(String[] stringArray) {
 }
 
 /** @return longest String object in an array using a stream */
-public Optional<String> getMin(String[] stringArray) {
+public Optional<String> getMax(String[] stringArray) {
     return Arrays.stream(stringArray).min(String::compareToIgnoreCase);
 }
 ```
@@ -334,10 +354,8 @@ public Optional<String> getRandom(String[] stringArray) {
 * The `reduce` method is a general mechanism for computing a value from a stream.
 
 ```Java
-public Integer sum(Integer[] numbers) {
-    Optional<Integer> result = Stream.of(numbers).reduce(Integer::sum);
-    Integer sum = result.get();
-    return sum;
+public void sum(Integer[] numbers) {
+    Optional<Integer> sum = Stream.of(numbers).reduce((x, y) -> x + y);
 }
 ```
 -
@@ -345,9 +363,8 @@ public Integer sum(Integer[] numbers) {
 * The `reduce` method is a general mechanism for computing a value from a stream.
 
 ```Java
-public Integer sum(Integer[] numbers) {
-  Integer sum = Stream.of(numbers).reduce(10, Integer::sum);
-  return sum;
+public void sum(Integer[] numbers) {
+  Integer sum2 = Stream.of(numbers).reduce(10, (x, y) -> x + y);
 }
 ```
 
@@ -382,7 +399,7 @@ List<String> list = words.collect(Collectors.toList());
 
 ```java
 Stream<String> words = Stream.of("The", "Quick", "Brown", "Fox");
-Set<String> list = words.collect(Collectors.toSet());
+       Set<String> list = words.collect(Collectors.toSet());
 ```
 
 -
@@ -413,16 +430,10 @@ public Map<String, List<Locale>> groupingByDemo() {
 ## Partitioning
 `.partitioningBy()` yields a Map that contains two groups, one for true values and another for false values.
 
-```Java
-public Map<Boolean, List<String>> partitionedStream() {
-    return Stream
-            .of("The", "Quick", "Brown", "Fox")
-            .collect(Collectors.partitioningBy(this::lengthIsGreaterThan4));
-}
+```java
+Stream<String> words = Stream.of("The", "Quick", "Brown", "Fox");
 
-public boolean lengthIsGreaterThan4(String x) {
-    return x.length() > 4;
-}
+Map<Boolean, List<String>> partitioned = words.collect(Collectors.partitioningBy(x -> x.length() > 4));
 ```
 -
 -
@@ -587,15 +598,13 @@ public class PrimitiveStreams {
 
 ```Java
 class Demo {
-  public void demo(List<String> words) {
-      int[] shortWords = new int[12];
-      words.parallelStream().forEach(s -> {
-          if (s.length() < 12) {
-              shortWords[s.length()]++;
-          }});
-      // Error - race condition!
-      System.out.println(Arrays.toString(shortWords));
-  }
+	public void demo(Stream<String> words) {
+		int[] shortWords = new int[12];
+		words.parallelStream().forEach(
+			s -> { if(s.length <12) shorts[s.length()]++; });
+			// Error - race condition!
+		System.out.println(Arrays.toString(shortWords));
+	}
 }
 ```
 * The function passed to `forEach` runs concurrently in multiple threads, each updating a shared array.
@@ -612,8 +621,7 @@ class Demo {
 ```Java
 class Demo {
 	public Map<Integer, Long> wordCountMap(Stream<String> words) {
-		return words
-      .paralellStream()
+		Map<Integer, Long> shortWordCounts = words.paralellStream()
 			.filter(s -> s.length() < 10)
 			.collect(groupingBy(String::length, counting()));
 	}

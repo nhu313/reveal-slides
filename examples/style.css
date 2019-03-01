@@ -1,0 +1,32 @@
+body {
+  background: #81D8D4 url('../img/Logo.jpg') fixed repeat-y;
+}
+
+header ul {
+  /* text in header ul is red (except if it's a link) */
+  color: #FF0000;
+}
+
+ul {
+  /* all text in a list is green (except header list) */
+  color: #00FF00;
+}
+
+ul li a{
+  /* link text is purple */
+  color: #FF00FF;
+}
+
+header > ul {
+
+}
+
+li+li {
+  /* only apply to tag with siblings */
+}
+
+/* nth (even & odd) */
+
+/* hover, before */
+
+/*  last child/first child*/
