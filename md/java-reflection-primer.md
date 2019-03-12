@@ -160,7 +160,7 @@ Class aClass = Class.forName(fullClassName);
 Class[] fieldTypes = new Class[]{String.class, String.class};
 
 //get the constructor
-Constructor constructor = aClass.getConstructor(fieldTypes);
+Constructor constructor = aClass.getDeclaredConstructor(fieldTypes);
 
 //create the object
 Object user = constructor.newInstance("Grace", "Hopper");
