@@ -12,21 +12,20 @@ class User {
 ```
 
 <p class="fragment fade-in-then-semi-out">We lied!</p>
+<p class="fragment fade-in-then-semi-out">We can use `java.lang.reflect` library to access everything.</p>
 
 -
 ## The Class Object
 
 Contains info about classes
 
-```
+```java
 //get class from a class
 Class aclass = String.class;
 
 //get class from an instance
 Class bclass = "words".getClass();
 ```
-
-All the code class is in the `import java.lang.reflect` package.
 
 -
 ## The Class Object - Field
@@ -192,11 +191,6 @@ public class User {
     private String firstName;
     private String lastName;
 
-    public User(String firstName, String lastName) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-    }
-
     public String getFirstName() {
         return firstName;
     }
@@ -210,8 +204,11 @@ public class User {
 
 ```java
 Class aClass = User.class;
-
+//all public methods
 Method[] methods = aClass.getMethods();
+
+//ALL methods including private and protected
+Method[] allMethods = aClass.getDeclaredMethods();
 ```
 -
 
@@ -224,11 +221,6 @@ public class User {
     private String firstName;
     private String lastName;
 
-    public User(String firstName, String lastName) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-    }
-
     public String getFirstName() {
         return firstName;
     }
@@ -242,7 +234,11 @@ public class User {
 
 ```java
 Class aClass = User.class;
+//only public method
 Method method = aClass.getMethod("getFirstName");
+
+//for any method (public, protected, private or default)
+Method amethod = aClass.getDeclaredMethod("somePrivateMethod");
 ```
 -
 
@@ -255,8 +251,10 @@ User user = new User("Grace", "Hopper");
 //get the class
 Class aClass = User.class;
 
+//declare argument type
+Class[] classes = new Class[]{String.class};
 //get the method with param
-Method method = aClass.getMethod("setFirstName", new Class[]{String.class});
+Method method = aClass.getMethod("setFirstName", classes);
 
 //call the method
 method.invoke(user, "Ada");
@@ -268,7 +266,23 @@ method.invoke(user, "Ada");
 - One for every class in your program
 - Once instance for every class
 
+```java
+User someUser = new User("Grace", "Hopper");
+User.class == someUser.getClass(); // return true
+
+User anotherUser = new User("Ada", "Lovelace");
+anotherUser.getClass() == someUser.getClass(); //return true
+```
+
+-
+## Reflection
+- Use when you don't have access or know the class
+- Mainly for writing library
+
 -
 ### Resources
 
 - [`Class` class documentation](https://docs.oracle.com/javase/8/docs/api/java/lang/Class.html)
+- [Oracle](https://docs.oracle.com/javase/tutorial/reflect/)
+- [Jenkov](http://tutorials.jenkov.com/java-reflection/index.html)
+- Chapter 5.7 in Core Java volume 1
