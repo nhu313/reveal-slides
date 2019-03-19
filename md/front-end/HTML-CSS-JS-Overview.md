@@ -54,7 +54,7 @@ HTML is the code for creating web pages.
 -
 -
 
-## What is an HTML document?
+## HTML document
 A text file of web page content wrapped in HTML tags.
 
 ```
@@ -72,7 +72,7 @@ A text file of web page content wrapped in HTML tags.
 ```
 -
 
-## What is an HTML Element?
+## HTML Element
 
 <img src="img/html-element.png" />
 
@@ -96,7 +96,7 @@ Some elements do not have content, so they are self closing.
 -
 
 
-## What is an HTML Attribute
+## HTML Attribute
 
 Provides additional information about the HTML element
 
@@ -107,13 +107,14 @@ Provides additional information about the HTML element
  `editor-note` is the value
 
 -
-## Example of HTML attribute
+## Example of HTML Attribute
 
 ```
-<img id="apple-pic" src="apple.jpg" width="100px" height=300px />
+<img id="apple-pic" class="profile-pic" src="apple.jpg" height=300px />
 ```
 
 - id
+- class
 - width
 - height
 
@@ -133,6 +134,7 @@ Correct
 
 Incorrect
 ```html
+<!--  Incorrect. It closes p even though strong is the inside element -->
 <p>My cat is <strong>very grumpy.</p></strong>
 ```
 
@@ -179,7 +181,9 @@ HTML 4
 
 ### `<html>`
 
-After DOCTYPE, the page content must be contained between `<html>` tags.
+After DOCTYPE, is the root element `HTML`.
+
+Everything else will go inside the `HTML` tag.
 
 ```html
 <!DOCTYPE html>
@@ -187,8 +191,6 @@ After DOCTYPE, the page content must be contained between `<html>` tags.
 
 </html>
 ```
-
-This is the root element.
 
 -
 ## Anatomy of an HTML document
@@ -358,10 +360,10 @@ By default, they are numbered items.
 
 ## Images - Inline
 
-<img src="img/Logo.jpg" alt="Zip Code Wilmington" title="Zip Code Wilmington" width=100px />
+<img src="img/Logo.jpg" alt="Zip Code Wilmington" title="ZCW" width=100px />
 
 ```html
-<img src="images/zcw-logo.png" alt="ZCW" title="ZCW" />
+<img src="images/zcw-logo.png" alt="Zip Code Wilmington" title="ZCW" />
 ```
 
 * ``src`` - path to the location of the image file
@@ -430,7 +432,9 @@ Used to send information to a server
 
 ## Input - Inline
 
-The most common type of form control is ``<input>``. Input types:
+The most common type of form control is ``<input>``. These generally go inside a form.
+
+#### Input types:
 
 * [Text](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/text) - ``<input type="text"/>``
 * [Checkbox](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/checkbox) - ``<input type="checkbox"/>``
@@ -473,6 +477,18 @@ I put my Walkman on and said, 'I might as well kick it'.
 <hr />
 
 -
+## Line break
+HTML ignores white space and new  line in the document.
+
+### Line break
+```
+<br \>
+```
+
+a<br>b
+
+-
+
 ## Space
 HTML ignores white space and new  line in the document.
 
@@ -483,16 +499,6 @@ HTML ignores white space and new  line in the document.
 ```
 a&nbsp;&nbsp;&nbsp;&nbsp;b
 
--
-## Line break
-HTML ignores white space and new  line in the document.
-
-### Line break
-```
-<br \>
-```
-
-a<br>b
 -
 
 ## Tables
@@ -565,14 +571,14 @@ Tables are made up of rows and columns.
 
 ## HTML5 Components
 
-* `<header>` - top content (e.g. title, logo, and navigation)
+* `<header>` - top content (e.g. title, logo, or navigation)
 * `<nav>` - navigation
 * `<main>` - content
 * `<footer` - bottom content (e.g. contact info, copyright, sub navigation)
 
 -
 
-## Basic Sections of an HTML Document
+## Basic HTML5 Document
 
 ```html
 <!DOCTYPE html>
@@ -583,26 +589,21 @@ Tables are made up of rows and columns.
     <title>My page title</title>
     <link href="https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300|Sonsie+One" rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="style.css">
-    <!-- the below three lines are a fix to get HTML5 semantic elements working in old versions of Internet Explorer-->
-    <!--[if lt IE 9]>
-      <script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.js"></script>
-    <![endif]-->
   </head>
 
   <body>
     <!-- Here is our main header that is used across all the pages of our website -->
     <header>
-      <h1>Header</h1>
+      <h1>Hello world!</h1>
+      <nav>
+        <ul>
+          <li><a href="#">Home</a></li>
+          <li><a href="#">Our team</a></li>
+          <li><a href="#">Projects</a></li>
+          <li><a href="#">Contact</a></li>
+        </ul>
+      </nav>
     </header>
-
-    <nav>
-      <ul>
-        <li><a href="#">Home</a></li>
-        <li><a href="#">Our team</a></li>
-        <li><a href="#">Projects</a></li>
-        <li><a href="#">Contact</a></li>
-      </ul>
-    </nav>
 
     <!-- Here is our page's main content -->
     <main>
@@ -701,6 +702,8 @@ When you need to wrap elements and can't think of a better tag.
 CSS stands for Cascading Style Sheets.
 
 It adds styles to the content (HTML).
+
+It makes your webpage looks pretty.
 
 ```CSS
 header {
@@ -893,8 +896,7 @@ p {
 [W3 school](https://www.w3schools.com/cssref/tryit.asp?filename=trycss_font)
 -
 
-## Font-size
-The font-size property specifies the size of the font.
+## Font properties
 
 ```
 p {
@@ -1035,73 +1037,6 @@ p {
 p {
   width: 50%;
   height: 300px;
-}
-```
-
--
--
-
-## Connecting CSS to HTML
-- "Inline"
-- "Embedded"
-- "External"
-
--
-
-## Inline
-
-```
-<p style="color:red">Some text.</p>
-```
-
-Applies to specific element
-
-Can't be reused
-
-DON'T DO IT!
-
-(unless you really really have to)
-
--
-## Embedded
-```
-<head>
-  <style type="text/css">
-    p {
-      color: red;
-      font-size: 12px;
-    }
-  </style>
-</head>
-```
-
-Inside <head> of the HTML document.
-
-Uses `<style>` tag.
-
-Can only be used in one HTML file
-
--
-
-## External
-
-index.html
-
-```html
-  <h1>Hello World!</h1>
-```
-
-style.css
-
-```CSS
-h1 {
-  color: pink;
-  background-color: aqua;
-  border: 1px solid purple;
-}
-
-p {
-  color: green;
 }
 ```
 
@@ -1364,6 +1299,76 @@ Your browser also assigns priority based on the specificity of the selection. Mo
 }
 ```
 
+-
+-
+
+## Connecting CSS to HTML
+- "External"
+- "Inline"
+- "Embedded"
+
+-
+
+## External
+
+Preferred style
+
+style.css
+
+```CSS
+h1 {
+  color: pink;
+}
+```
+
+index.html
+
+```html
+<html>
+  <head>
+    <link rel="stylesheet" href="/style.css">
+  </head>
+  <body>
+    <h1>Hello World!</h1>
+  </body>
+</html>
+```
+
+-
+
+## Inline
+
+```
+<p style="color:red">Some text.</p>
+```
+
+Applies to specific element
+
+Can't be reused
+
+DON'T DO IT!
+
+(unless you really really have to)
+
+-
+## Embedded
+```
+<head>
+  <style type="text/css">
+    p {
+      color: red;
+      font-size: 12px;
+    }
+  </style>
+</head>
+```
+
+Inside <head> of the HTML document.
+
+Uses `<style>` tag.
+
+Can only be used in one HTML file
+-
 -
 
 ## Demo

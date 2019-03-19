@@ -12,7 +12,7 @@ class User {
 ```
 
 <p class="fragment fade-in-then-semi-out">We lied!</p>
-<p class="fragment fade-in-then-semi-out">We can use `java.lang.reflect` library to access everything.</p>
+<p class="fragment fade-in-then-semi-out">`java.lang.reflect` can access EVERYTHING!</p>
 
 -
 ## The Class Object
